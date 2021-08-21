@@ -19,5 +19,8 @@
   "homepage": "https://github.com/MrJustice26/zadanie-frontend#readme",
   "devDependencies": {
     "sass": "^1.38.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.0"
   }
 }
