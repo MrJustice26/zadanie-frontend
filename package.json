@@ -1,0 +1,23 @@
+{
+  "name": "zad-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel ./src/index.html",
+    "build": "parcel ./src/build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrJustice26/zadanie-frontend.git"
+  },
+  "author": "Vladislav <vladislav2074@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrJustice26/zadanie-frontend/issues"
+  },
+  "homepage": "https://github.com/MrJustice26/zadanie-frontend#readme",
+  "devDependencies": {
+    "sass": "^1.38.0"
+  }
+}
