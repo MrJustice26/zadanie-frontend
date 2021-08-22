@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./..\\assets\\fonts\\GothamBook.ttf":[["GothamBook.b99e2b74.ttf","assets/fonts/GothamBook.ttf"],"assets/fonts/GothamBook.ttf"],"./..\\assets\\fonts\\GothamMedium.ttf":[["GothamMedium.4f1e5308.ttf","assets/fonts/GothamMedium.ttf"],"assets/fonts/GothamMedium.ttf"],"./..\\assets\\fonts\\GothamBold.ttf":[["GothamBold.65e0c91f.ttf","assets/fonts/GothamBold.ttf"],"assets/fonts/GothamBold.ttf"],"./..\\assets\\map.png":[["map.fe1c6ce7.png","assets/map.png"],"assets/map.png"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./..\\assets\\fonts\\GothamBook.ttf":[["GothamBook.b99e2b74.ttf","assets/fonts/GothamBook.ttf"],"assets/fonts/GothamBook.ttf"],"./..\\assets\\fonts\\GothamMedium.ttf":[["GothamMedium.4f1e5308.ttf","assets/fonts/GothamMedium.ttf"],"assets/fonts/GothamMedium.ttf"],"./..\\assets\\fonts\\GothamBold.ttf":[["GothamBold.65e0c91f.ttf","assets/fonts/GothamBold.ttf"],"assets/fonts/GothamBold.ttf"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

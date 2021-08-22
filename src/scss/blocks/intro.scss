@@ -61,3 +61,53 @@
     width: 100%;
   }
 }
+
+.pointer {
+  opacity: 0;
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: opacity 0.5s;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.line {
+  position: absolute;
+  height: 2px;
+  width: 0rem;
+  right: 1.8rem;
+  top: 0.3125rem;
+  background-color: #fff;
+  transition: width 0.4s;
+  .pointer.active & {
+    width: 12rem;
+  }
+  &__top-text {
+    position: absolute;
+    top: -1.9rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  &__bottom-text {
+    position: absolute;
+    font-size: 1rem;
+    top: 0.4rem;
+  }
+  &__top-text,
+  &__bottom-text {
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+  .pointer.active &__top-text {
+    opacity: 1;
+  }
+  .pointer.active &__bottom-text {
+    opacity: 1;
+  }
+}

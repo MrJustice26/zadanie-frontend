@@ -11,6 +11,32 @@
 
 <script src="/scss.6b84482b.js"></script></head>
 <body>
+    <img src="/map.fe1c6ce7.png" alt="Map of earth" class="user-map" usemap="#image-map">
+    <map name="image-map">
+        <!-- <area target="" class="area-position" alt="Paris Air Show" title="Paris Air Show" href="#" coords="722,189,22" shape="circle">
+        <area target="" class="area-position" alt="NBAA" title="NBAA" href="#" coords="761,343,24" shape="circle">
+        <area target="" class="area-position" alt="Medica" title="Medica" href="#" coords="918,284,21" shape="circle">
+        <area target="" class="area-position" alt="Orgatec" title="Orgatec" href="#" coords="368,500,22" shape="circle">
+        <area target="" class="area-position" alt="IDS" title="IDS" href="#" coords="256,210,26" shape="circle">
+        <area target="" class="area-position" alt="Domotex" title="Domotex" href="#" coords="941,581,22" shape="circle">
+        <area target="" class="area-position" alt="Mosbuild" title="Mosbuild" href="#" coords="929,146,22" shape="circle">
+        <area target="" class="area-position" alt="BAU" title="BAU" href="#" coords="847,180,19" shape="circle">
+        <area target="" class="area-position" alt="Carsaie" title="Cersaie" href="#" coords="1117,383,18" shape="circle">
+        <area target="" class="area-position" alt="ISH" title="ISH" href="#" coords="1283,306,23" shape="circle">
+        <area target="" class="area-position" alt="EBACE" title="EBACE" href="#" coords="1425,629,224" shape="circle"> -->
+
+        <area target="" class="area-position" alt="EBACE" title="EBACE" href="" coords="743,195,1" shape="circle">
+        <area target="" class="area-position" alt="NBAA" title="NBAA" href="" coords="292,228,1" shape="circle">
+        <area target="" class="area-position" alt="Medica" title="Medica" href="" coords="753,176,1" shape="circle">
+        <area target="" class="area-position" alt="Orgatec" title="Orgatec" href="" coords="1324,293,0" shape="circle">
+        <area target="" class="area-position" alt="IDS" title="IDS" href="" coords="721,167,1" shape="circle">
+        <area target="" class="area-position" alt="Domotex" title="Domotex" href="" coords="736,165,1" shape="circle">
+        <area target="" class="area-position" alt="Mosbuild" title="Mosbuild" href="" coords="875,139,1" shape="circle">
+        <area target="" class="area-position" alt="BAU" title="BAU" href="" coords="755,169,1" shape="circle">
+        <area target="" class="area-position" alt="Paris Air Show" title="Paris Air Show" href="" coords="714,176,1" shape="circle">
+        <area target="" class="area-position" alt="Cersaie" title="Cersaie" href="" coords="761,207,1" shape="circle">
+        <area target="" class="area-position" alt="ISH" title="ISH" href="" coords="1307,232,1" shape="circle">
+    </map>
     <nav class="nav ">
         <div class="nav__container container-fluid">
             <a href="#" class="nav__item nav__logo d-flex">
@@ -35,34 +61,44 @@
             </ul>
         </div>
     </nav>
+    <div class="pointer">
+        <div class="line">
+            <span class="line__top-text">
+                Paris Air Show
+            </span>
+            <span class="line__bottom-text">
+                Paris (France)
+            </span>
+        </div>
+    </div>
     <main class="intro container-fluid">
         <h1 class="intro__title">World ahead</h1>
         <div class="intro__cta">
             <div class="intro__lists">
                 <ul class="intro__list">
-                    <li class="list__item">EBACE</li>
-                    <li class="list__item">NBAA</li>
-                    <li class="list__item">Medica</li>
-                    <li class="list__item">Orgatec</li>
-                    <li class="list__item">IDS</li>
-                    <li class="list__item">Domotex</li>
-                    <li class="list__item">Mosbuild</li>
+                    <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
+                    <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
+                    <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
+                    <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
+                    <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
+                    <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
+                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
                 </ul>
                 <ul class="intro__list">
-                    <li class="list__item">EBACE</li>
-                    <li class="list__item">NBAA</li>
-                    <li class="list__item">Medica</li>
-                    <li class="list__item">Orgatec</li>
-                    <li class="list__item">IDS</li>
-                    <li class="list__item">Domotex</li>
-                    <li class="list__item">Mosbuild</li>
+                    <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
+                    <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
+                    <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
+                    <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
+                    <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
+                    <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
+                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
                 </ul>
                 <ul class="intro__list">
-                    <li class="list__item">Mosbuild</li>
-                    <li class="list__item">BAU</li>
-                    <li class="list__item">Paris Air Show</li>
-                    <li class="list__item">Cersaie</li>
-                    <li class="list__item">ISH</li>
+                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
+                    <li class="list__item" data-subtitle="Cologne (Germany)">BAU</li>
+                    <li class="list__item" data-subtitle="Paris (France)">Paris Air Show</li>
+                    <li class="list__item" data-subtitle="Bologne (Italy)">Cersaie</li>
+                    <li class="list__item" data-subtitle="Beijing (China)">ISH</li>
                 </ul>
             </div>
             <div class="work-type__container">
