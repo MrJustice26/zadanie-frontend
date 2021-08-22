@@ -1,0 +1,21 @@
+@import "./vars.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./font.scss";
+@import "./blocks/nav.scss";
+@import "./blocks/intro.scss";
+
+:root {
+  --bs-body-font-family: "Gotham", sans-serif;
+  --bs-body-color: #fff;
+  --bs-body-bg: #9d090f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("../assets/map.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}

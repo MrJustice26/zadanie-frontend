@@ -118,7 +118,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+var $listItems = document.querySelectorAll(".list__item");
+var $introTitle = document.querySelector(".intro__title");
+var desiredColor = "#700507";
+document.addEventListener('click', function (e) {
+  var _e$target, _e$target$closest;
 
+  console.log(e.target.closest(".dropdown"));
+
+  if (e.target.classList.contains("list__item")) {
+    $introTitle.classList.add("hide");
+    toColor($listItems, desiredColor);
+    e.target.style.color = "white";
+  } else if ((_e$target = e.target) !== null && _e$target !== void 0 && (_e$target$closest = _e$target.closest(".dropdown")) !== null && _e$target$closest !== void 0 && _e$target$closest.classList.contains("dropdown")) {
+    var _e$target2, _e$target2$closest;
+
+    (_e$target2 = e.target) === null || _e$target2 === void 0 ? void 0 : (_e$target2$closest = _e$target2.closest(".dropdown")) === null || _e$target2$closest === void 0 ? void 0 : _e$target2$closest.classList.toggle("active");
+  } else {
+    $introTitle.classList.remove("hide");
+    toColor($listItems, "#fff");
+  }
+});
+
+function toColor(arr, color) {
+  arr.forEach(function (item) {
+    item.style.color = color;
+  });
+}
 },{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -147,7 +173,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1034" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1030" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

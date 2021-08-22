@@ -11130,16 +11130,6 @@ textarea.form-control-lg {
   font-style: normal;
   font-weight: 600;
 }
-:root {
-  --bs-body-font-family: "Gotham", sans-serif;
-  --bs-body-color: #fff;
-  --bs-body-bg: #9d090f;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 .nav {
   margin-top: 2.75rem;
 }
@@ -11151,8 +11141,11 @@ textarea.form-control-lg {
 .nav__item {
   max-width: 330px;
   width: 100%;
-  margin-right: 2.75rem;
   justify-content: space-between;
+  list-style: none;
+}
+.nav__item:not(:last-child) {
+  margin-right: 2.75rem;
 }
 .nav__link {
   text-transform: uppercase;
@@ -11162,12 +11155,50 @@ textarea.form-control-lg {
   font-weight: 600;
   transition: color 0.4s;
 }
-.nav__link:hover {
+.nav__link:hover:not(.nav__link.dropdown) {
   color: black !important;
 }
 .nav__logo {
   position: relative;
   right: 5.5rem;
+}
+
+.dropdown {
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.2s;
+  position: relative;
+  user-select: none;
+}
+.dropdown.active {
+  color: black !important;
+}
+.dropdown__img {
+  margin-right: 0.3125rem;
+  width: 0.625rem;
+  transition: transform 0.2s;
+}
+.dropdown.active .dropdown__img {
+  transform: rotate(180deg);
+}
+.dropdown__content {
+  margin-top: 0.625rem;
+  display: none;
+  position: absolute;
+  top: 0.9375rem;
+  right: -0.625rem;
+  list-style: none;
+  padding: 0.5rem 0;
+  color: white !important;
+}
+.dropdown__content > li {
+  transition: color 0.2s;
+}
+.dropdown__content > li:hover {
+  color: black !important;
+}
+.dropdown.active .dropdown__content {
+  display: block;
 }
 
 .intro {
@@ -11193,6 +11224,7 @@ textarea.form-control-lg {
 }
 .intro__lists {
   display: flex;
+  margin-right: 2rem;
 }
 .intro__list {
   list-style: none;
@@ -11226,4 +11258,20 @@ textarea.form-control-lg {
   width: 100%;
 }
 
-/*# sourceMappingURL=/styles.434540e1.css.map */
+:root {
+  --bs-body-font-family: "Gotham", sans-serif;
+  --bs-body-color: #fff;
+  --bs-body-bg: #9d090f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/map.fe1c6ce7.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*# sourceMappingURL=/scss.6b84482b.css.map */

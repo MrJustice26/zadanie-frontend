@@ -5,27 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Van Hagen</title>
-    <link rel="stylesheet" href="/styles.434540e1.css">
+    <link rel="stylesheet" href="/scss.6b84482b.css">
 
 
 
-<script src="/styles.434540e1.js"></script></head>
+<script src="/scss.6b84482b.js"></script></head>
 <body>
     <nav class="nav ">
         <div class="nav__container container-fluid">
             <a href="#" class="nav__item nav__logo d-flex">
                 <img src="/logo.b37d81ec.svg" alt="logo">
             </a>
-            <div class="nav__item d-flex">
-                <a href="#" class="nav__link">Our work</a>
-                <a href="#" class="nav__link">Technology process</a>
-            </div>
+            <ul class="nav__item d-flex">
+                <li><a href="#" class="nav__link">Our work</a></li>
+                <li><a href="#" class="nav__link">Technology process</a></li>
+            </ul>
             <div class="nav__item"></div>
-            <div class="nav__item d-flex">
-                <a href="#" class="nav__link">About us</a>
-                <a href="#" class="nav__link">Contact</a>
-                <a href="#" class="nav__link">PL</a>
-            </div>
+            <ul class="nav__item d-flex">
+                <li><a href="#" class="nav__link">About us</a></li>
+                <li><a href="#" class="nav__link">Contact</a></li>
+                <li class="nav__link d-flex dropdown">
+                    <img src="/chevron-down.cc32021d.svg" class="dropdown__img" alt="arrow-down">
+                    <span class="dropdown__title">PL</span>
+                    <ul class="dropdown__content">
+                        <li>ENG</li>
+                        <li>RU</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
     <main class="intro container-fluid">
@@ -66,6 +73,7 @@
             </div>
         </div>
     </main>
+    <script src="https://unpkg.com/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
     <script src="/main.1f19ae8e.js"></script>
 </body>
 </html>
