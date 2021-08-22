@@ -20,20 +20,25 @@ $areas.forEach(area => {
         }
     )  
 })
-window.addEventListener("resize", () => {
-    activeTitle && drawPointer(activeTitle)
-})
+
 document.addEventListener('click', (e) => {
+    const pointer = document.querySelector(".pointer")
+    pointer?.classList.remove("active")
+    setTimeout(() => {
+        pointer?.remove()
+    }, 300)
     if($dropdown.classList.contains("active")) {
         $dropdown.classList.remove("active")
         return
     }
-    if($pointer.classList.contains("active")){
+    if($pointer?.classList.contains("active")){
         $pointer.classList.remove("active")
     }
     if(e.target.classList.contains("list__item")){
+        const $pointer = createPointer();
         activeTitle = e.target.textContent
-        drawPointer(e.target.textContent)
+        
+        drawPointer($pointer, e.target.textContent)
         $pointer.querySelector(".line__top-text").textContent = e.target.textContent
         $pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle
         $introTitle.classList.add("hide")
@@ -58,8 +63,29 @@ function toColor(arr, color){
     })
 }
 
-function drawPointer(title){
+function createPointer(){
+    const $pointer = document.createElement("div")
+    $pointer.classList.add("pointer")
+    $pointer.insertAdjacentHTML("afterbegin", `
+        <div class="line">
+            <span class="line__top-text">
+            </span>
+            <span class="line__bottom-text">
+            </span>
+        </div>
+    `)
+    document.body.appendChild($pointer)
+    window.addEventListener("resize", () => {
+        activeTitle && drawPointer($pointer, activeTitle)
+    })
+    return $pointer;
+}
 
+function removePointer(el){
+    el.remove()
+}
+
+function drawPointer(el, title){
     const eventShow = eventsPlace.filter(event => event.title === title)[0]
     const coords = eventShow['coords']
     const imageMapPosition = $imageMap.getBoundingClientRect()
@@ -68,10 +94,8 @@ function drawPointer(title){
     pointerX = x + imageMapPosition['x']
     pointerY = y + imageMapPosition['y']
 
-    $pointer.style.top = pointerY + "px"
-    $pointer.style.left = pointerX + "px"
-    console.log(pointerX, window.innerWidth)
-    console.log(pointerY, window.innerHeight)
+    el.style.top = pointerY + "px"
+    el.style.left = pointerX + "px"
 }
 
 

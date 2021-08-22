@@ -147,30 +147,36 @@ $areas.forEach(function (area) {
     }).slice(0, 2)
   });
 });
-window.addEventListener("resize", function () {
-  activeTitle && drawPointer(activeTitle);
-});
 document.addEventListener('click', function (e) {
   var _e$target, _e$target$closest;
+
+  var pointer = document.querySelector(".pointer");
+  pointer === null || pointer === void 0 ? void 0 : pointer.classList.remove("active");
+  setTimeout(function () {
+    pointer === null || pointer === void 0 ? void 0 : pointer.remove();
+  }, 300);
 
   if ($dropdown.classList.contains("active")) {
     $dropdown.classList.remove("active");
     return;
   }
 
-  if ($pointer.classList.contains("active")) {
+  if ($pointer !== null && $pointer !== void 0 && $pointer.classList.contains("active")) {
     $pointer.classList.remove("active");
   }
 
   if (e.target.classList.contains("list__item")) {
+    var _$pointer = createPointer();
+
     activeTitle = e.target.textContent;
-    drawPointer(e.target.textContent);
-    $pointer.querySelector(".line__top-text").textContent = e.target.textContent;
-    $pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle;
+    drawPointer(_$pointer, e.target.textContent);
+    _$pointer.querySelector(".line__top-text").textContent = e.target.textContent;
+    _$pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle;
     $introTitle.classList.add("hide");
     toColor($listItems, desiredColor);
     e.target.style.color = "white";
-    $pointer.classList.add("active");
+
+    _$pointer.classList.add("active");
   } else if ((_e$target = e.target) !== null && _e$target !== void 0 && (_e$target$closest = _e$target.closest(".dropdown")) !== null && _e$target$closest !== void 0 && _e$target$closest.classList.contains("dropdown")) {
     $dropdown.classList.toggle("active");
   } else {
@@ -185,7 +191,22 @@ function toColor(arr, color) {
   });
 }
 
-function drawPointer(title) {
+function createPointer() {
+  var $pointer = document.createElement("div");
+  $pointer.classList.add("pointer");
+  $pointer.insertAdjacentHTML("afterbegin", "\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    ");
+  document.body.appendChild($pointer);
+  window.addEventListener("resize", function () {
+    activeTitle && drawPointer($pointer, activeTitle);
+  });
+  return $pointer;
+}
+
+function removePointer(el) {
+  el.remove();
+}
+
+function drawPointer(el, title) {
   var eventShow = eventsPlace.filter(function (event) {
     return event.title === title;
   })[0];
@@ -198,10 +219,8 @@ function drawPointer(title) {
 
   pointerX = x + imageMapPosition['x'];
   pointerY = y + imageMapPosition['y'];
-  $pointer.style.top = pointerY + "px";
-  $pointer.style.left = pointerX + "px";
-  console.log(pointerX, window.innerWidth);
-  console.log(pointerY, window.innerHeight);
+  el.style.top = pointerY + "px";
+  el.style.left = pointerX + "px";
 }
 },{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
