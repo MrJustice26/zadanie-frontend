@@ -80,12 +80,12 @@
   position: absolute;
   height: 2px;
   width: 0rem;
-  right: 1.8rem;
+  right: 1.4rem;
   top: 0.3125rem;
   background-color: #fff;
   transition: width 0.4s;
   .pointer.active & {
-    width: 12rem;
+    width: 10rem;
   }
   &__top-text {
     position: absolute;
@@ -109,5 +109,38 @@
   }
   .pointer.active &__bottom-text {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .intro {
+    margin-top: 0;
+    padding: 0 3.75rem;
+    &__title {
+      margin-top: 5.25rem;
+      font-size: 4.5rem;
+    }
+    &__cta {
+      margin-top: 4rem;
+      flex-direction: column;
+    }
+    &__lists {
+      width: 100%;
+      margin-right: 0;
+      justify-content: space-between;
+    }
+    &__list {
+      margin-right: 3.625rem !important;
+    }
+  }
+
+  .work-type__container {
+    margin-top: 6rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .intro {
+    padding: 0 0.75rem;
   }
 }

@@ -117,79 +117,145 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"js/pointer.js":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createPointer = createPointer;
+exports.drawPointer = drawPointer;
+exports.generateCoords = generateCoords;
 
-  return bundleURL;
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var $imageMap = document.querySelector(".user-map");
+var $areas = document.querySelectorAll(".area-position");
+var eventsPlace = [];
+var eventCoordsCalcX;
+
+function createPointer() {
+  var $pointer = document.createElement("div");
+  $pointer.classList.add("pointer");
+  $pointer.insertAdjacentHTML("afterbegin", "\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    ");
+  document.body.appendChild($pointer);
+  window.addEventListener("scroll", function () {
+    activeTitle && drawPointer($pointer, activeTitle);
+  });
+  window.addEventListener("resize", function () {
+    activeTitle && drawPointer($pointer, activeTitle);
+  });
+  return $pointer;
 }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+function drawPointer(el, title) {
+  var imageMapPosition = $imageMap.getBoundingClientRect();
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
+  var _generateCoords = generateCoords(title, imageMapPosition),
+      _generateCoords2 = _slicedToArray(_generateCoords, 4),
+      coordsX = _generateCoords2[0],
+      imageMapPositionX = _generateCoords2[1],
+      coordsY = _generateCoords2[2],
+      imageMapPositionY = _generateCoords2[3];
 
-  return '/';
+  var pointerX = coordsX + imageMapPositionX;
+  var pointerY = coordsY + imageMapPositionY + window.pageYOffset;
+  $imageMap.style.left = "calc(50% + ".concat(imageMapPosition.width / 2 - coordsX, "px)");
+  el.style.left = "50%";
+  var lineWidth = 240;
+  var distanceBetweenCircleAndLine = 22.4;
+  el.querySelector(".line").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem";
+  el.querySelector(".line__top-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
+  el.querySelector(".line__bottom-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
+  el.style.top = pointerY + "px";
 }
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+function generateCoords(title, imageMapPosition) {
+  // eventCoords - zmienna, w której znajduje się nazwa eventu i koordynaty (x, y) gdzie dane wydarzenie się odbędzie
+  var eventCoords = eventsPlace.filter(function (event) {
+    return event.title === title;
+  })[0]['coords'];
+
+  var _eventCoords = _slicedToArray(eventCoords, 2),
+      coordsX = _eventCoords[0],
+      coordsY = _eventCoords[1];
+
+  var x = imageMapPosition.x,
+      y = imageMapPosition.y;
+  return [coordsX, x, coordsY, y];
 }
 
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
+$areas.forEach(function (area) {
+  eventsPlace.push({
+    title: area.title,
+    coords: area.coords.split(",").map(function (val) {
+      return +val;
+    }).slice(0, 2)
+  });
+});
+},{}],"js/main.js":[function(require,module,exports) {
+"use strict";
 
-function updateLink(link) {
-  var newLink = link.cloneNode();
+var _pointer = require("./pointer");
 
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
+var $listItems = document.querySelectorAll(".list__item");
+var $introTitle = document.querySelector(".intro__title");
+var $dropdown = document.querySelector(".dropdown");
+var desiredColor = "#700507";
+var activeTitle;
+$dropdown.querySelector(".dropdown__btn").addEventListener("click", function (e) {
+  $dropdown.classList.toggle("active");
+});
+document.addEventListener('click', function (e) {
+  // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest ten samy,
+  // to nic się nie dzieje
+  if (activeTitle === e.target.textContent) {
     return;
   }
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
+  var $pointer = document.querySelectorAll(".pointer");
+  $pointer === null || $pointer === void 0 ? void 0 : $pointer.forEach(function (el) {
+    el.classList.remove("active");
+    setTimeout(function () {
+      el.remove();
+    }, 300);
+  });
+  activeTitle = '';
 
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
+  if (e.target.classList.contains("list__item")) {
+    var _$pointer = (0, _pointer.createPointer)();
 
-    cssTimeout = null;
-  }, 50);
+    activeTitle = e.target.textContent;
+    (0, _pointer.drawPointer)(_$pointer, e.target.textContent);
+    _$pointer.querySelector(".line__top-text").textContent = e.target.textContent;
+    _$pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle;
+    $introTitle.classList.add("hide");
+    toColor($listItems, desiredColor);
+    e.target.style.color = "white";
+
+    _$pointer.classList.add("active");
+  } else {
+    $introTitle.classList.remove("hide");
+    toColor($listItems, "#fff");
+  }
+});
+
+function toColor(arr, color) {
+  arr.forEach(function (item) {
+    item.style.color = color;
+  });
 }
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"scss/index.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./..\\assets\\fonts\\GothamBook.ttf":[["GothamBook.b99e2b74.ttf","assets/fonts/GothamBook.ttf"],"assets/fonts/GothamBook.ttf"],"./..\\assets\\fonts\\GothamMedium.ttf":[["GothamMedium.4f1e5308.ttf","assets/fonts/GothamMedium.ttf"],"assets/fonts/GothamMedium.ttf"],"./..\\assets\\fonts\\GothamBold.ttf":[["GothamBold.65e0c91f.ttf","assets/fonts/GothamBold.ttf"],"assets/fonts/GothamBold.ttf"],"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./pointer":"js/pointer.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +459,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/scss.6b84482b.js.map
+},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/main.js"], null)
+//# sourceMappingURL=/main.fb6bbcaf.js.map

@@ -150,8 +150,16 @@ $areas.forEach(function (area) {
 document.addEventListener('click', function (e) {
   var _e$target, _e$target$closest;
 
+  // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest ten samy,
+  // to nic się nie dzieje
+  if (activeTitle === e.target.textContent) {
+    return;
+  }
+
+  $imageMap.style.cssText = 'left: 50%; top: 50%;';
   var pointer = document.querySelector(".pointer");
   pointer === null || pointer === void 0 ? void 0 : pointer.classList.remove("active");
+  activeTitle = '';
   setTimeout(function () {
     pointer === null || pointer === void 0 ? void 0 : pointer.remove();
   }, 300);
@@ -159,6 +167,8 @@ document.addEventListener('click', function (e) {
   if ($dropdown.classList.contains("active")) {
     $dropdown.classList.remove("active");
     return;
+  } else if ((_e$target = e.target) !== null && _e$target !== void 0 && (_e$target$closest = _e$target.closest(".dropdown")) !== null && _e$target$closest !== void 0 && _e$target$closest.classList.contains("dropdown") || e.target.classList.contains(".dropdown__img")) {
+    $dropdown.classList.toggle("active");
   }
 
   if ($pointer !== null && $pointer !== void 0 && $pointer.classList.contains("active")) {
@@ -177,8 +187,6 @@ document.addEventListener('click', function (e) {
     e.target.style.color = "white";
 
     _$pointer.classList.add("active");
-  } else if ((_e$target = e.target) !== null && _e$target !== void 0 && (_e$target$closest = _e$target.closest(".dropdown")) !== null && _e$target$closest !== void 0 && _e$target$closest.classList.contains("dropdown")) {
-    $dropdown.classList.toggle("active");
   } else {
     $introTitle.classList.remove("hide");
     toColor($listItems, "#fff");
@@ -219,8 +227,17 @@ function drawPointer(el, title) {
 
   pointerX = x + imageMapPosition['x'];
   pointerY = y + imageMapPosition['y'];
-  el.style.top = pointerY + "px";
+
+  if (window.innerWidth - (imageMapPosition['x'] + x) < 0) {
+    var substractDifference = window.innerWidth - (imageMapPosition['x'] + x);
+    $imageMap.style.left = ~(+$imageMap.style.left.slice(0, 2) + Math.floor(substractDifference / window.innerWidth * 100)) + "%";
+  }
+
+  el.querySelector(".line").style.cssText = pointerX - 22.4 - 240 + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem";
+  el.querySelector(".line__top-text").style.cssText = pointerX - 22.4 - 240 + 59 < 0 ? "right: 0;" : "left: 0;";
+  el.querySelector(".line__bottom-text").style.cssText = pointerX - 22.4 - 240 + 59 < 0 ? "right: 0;" : "left: 0;";
   el.style.left = pointerX + "px";
+  el.style.top = pointerY + "px";
 }
 },{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -250,7 +267,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1030" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1539" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

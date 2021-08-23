@@ -14,20 +14,9 @@
   box-sizing: border-box;
 }
 
-body {
-  overflow: hidden;
-}
-
-// body {
-//   background-image: url("../assets/map.png");
-//   background-position: center;
-//   background-repeat: no-repeat;
-// }
-
 .user-map {
-  position: absolute;
+  position: fixed;
   z-index: -1;
-  left: 50%;
-  top: 50%;
+  transition: left 0.6s;
   transform: translate(-50%, -50%);
 }

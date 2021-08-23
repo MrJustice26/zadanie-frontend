@@ -11,21 +11,9 @@
 
 </head>
 <body >
-    <img src="assets/map.png"alt="Map of earth" class="user-map" usemap="#image-map">
+    <img src="assets/map.png"alt="Map of earth" class="user-map" usemap="#image-map" style="left:50%; top: 50%;">
     <map name="image-map">
-        <!-- <area target="" class="area-position" alt="Paris Air Show" title="Paris Air Show" href="#" coords="722,189,22" shape="circle">
-        <area target="" class="area-position" alt="NBAA" title="NBAA" href="#" coords="761,343,24" shape="circle">
-        <area target="" class="area-position" alt="Medica" title="Medica" href="#" coords="918,284,21" shape="circle">
-        <area target="" class="area-position" alt="Orgatec" title="Orgatec" href="#" coords="368,500,22" shape="circle">
-        <area target="" class="area-position" alt="IDS" title="IDS" href="#" coords="256,210,26" shape="circle">
-        <area target="" class="area-position" alt="Domotex" title="Domotex" href="#" coords="941,581,22" shape="circle">
-        <area target="" class="area-position" alt="Mosbuild" title="Mosbuild" href="#" coords="929,146,22" shape="circle">
-        <area target="" class="area-position" alt="BAU" title="BAU" href="#" coords="847,180,19" shape="circle">
-        <area target="" class="area-position" alt="Carsaie" title="Cersaie" href="#" coords="1117,383,18" shape="circle">
-        <area target="" class="area-position" alt="ISH" title="ISH" href="#" coords="1283,306,23" shape="circle">
-        <area target="" class="area-position" alt="EBACE" title="EBACE" href="#" coords="1425,629,224" shape="circle"> -->
-
-        <area target="" class="area-position" alt="EBACE" title="EBACE"  href="" coords="743,195,1" shape="circle">
+        <area target="" class="area-position" alt="EBACE" title="EBACE"  href="" coords="740,190,1" shape="circle">
         <area target="" class="area-position" alt="NBAA" title="NBAA"  href="" coords="292,228,1" shape="circle">
         <area target="" class="area-position" alt="Medica" title="Medica"  href="" coords="753,176,1" shape="circle">
         <area target="" class="area-position" alt="Orgatec" title="Orgatec"  href="" coords="1324,293,0" shape="circle">
@@ -34,7 +22,7 @@
         <area target="" class="area-position" alt="Mosbuild" title="Mosbuild"  href="" coords="875,139,1" shape="circle">
         <area target="" class="area-position" alt="BAU" title="BAU"  href="" coords="755,169,1" shape="circle">
         <area target="" class="area-position" alt="Paris Air Show" title="Paris Air Show" href="" coords="714,176,1" shape="circle">
-        <area target="" class="area-position" alt="Cersaie" title="Cersaie"  href="" coords="761,207,1" shape="circle">
+        <area target="" class="area-position" alt="Cersaie" title="Cersaie"  href="" coords="755,201,1" shape="circle">
         <area target="" class="area-position" alt="ISH" title="ISH"  href="" coords="1307,232,1" shape="circle">
     </map>
     <nav class="nav ">
@@ -46,13 +34,15 @@
                 <li><a href="#" class="nav__link">Our work</a></li>
                 <li><a href="#" class="nav__link">Technology process</a></li>
             </ul>
-            <div class="nav__item"></div>
             <ul class="nav__item d-flex">
                 <li><a href="#" class="nav__link">About us</a></li>
                 <li><a href="#" class="nav__link">Contact</a></li>
                 <li class="nav__link d-flex dropdown">
-                    <img src="assets/chevron-down.svg" class="dropdown__img" alt="arrow-down">
-                    <span class="dropdown__title">PL</span>
+                    <a href="#" class="dropdown__btn d-flex align-items-baseline">
+                        <svg class="dropdown__img" alt="arrow-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#fff" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
+                        <span class="dropdown__title">PL</span>
+                    </a>
+                    
                     <ul class="dropdown__content">
                         <li>ENG</li>
                         <li>RU</li>
@@ -60,17 +50,10 @@
                 </li>
             </ul>
         </div>
-    </nav>
-    <!-- <div class="pointer">
-        <div class="line">
-            <span class="line__top-text">
-                Paris Air Show
-            </span>
-            <span class="line__bottom-text">
-                Paris (France)
-            </span>
+        <div class="nav__hamburgher">
+            <svg height="32px"  style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/></svg>
         </div>
-    </div> -->
+    </nav>
     <main class="intro container-fluid">
         <h1 class="intro__title">World ahead</h1>
         <div class="intro__cta">
@@ -95,7 +78,7 @@
                 </ul>
                 <ul class="intro__list">
                     <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
-                    <li class="list__item" data-subtitle="Cologne (Germany)">BAU</li>
+                    <li class="list__item" data-subtitle="Munich (Germany)">BAU</li>
                     <li class="list__item" data-subtitle="Paris (France)">Paris Air Show</li>
                     <li class="list__item" data-subtitle="Bologne (Italy)">Cersaie</li>
                     <li class="list__item" data-subtitle="Beijing (China)">ISH</li>
@@ -109,7 +92,6 @@
             </div>
         </div>
     </main>
-    <script src="https://unpkg.com/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
-    <script src="main.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

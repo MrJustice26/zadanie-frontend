@@ -11139,13 +11139,14 @@ textarea.form-control-lg {
   max-width: 1453px;
 }
 .nav__item {
+  margin-bottom: 0;
   max-width: 330px;
   width: 100%;
   justify-content: space-between;
   list-style: none;
 }
-.nav__item:not(:last-child) {
-  margin-right: 2.75rem;
+.nav__item:first-child {
+  margin-right: 16.375rem;
 }
 .nav__link {
   text-transform: uppercase;
@@ -11173,6 +11174,14 @@ textarea.form-control-lg {
 .dropdown.active {
   color: black !important;
 }
+.dropdown__btn {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.dropdown__btn:hover {
+  color: black;
+}
 .dropdown__img {
   margin-right: 0.3125rem;
   width: 0.625rem;
@@ -11180,6 +11189,10 @@ textarea.form-control-lg {
 }
 .dropdown.active .dropdown__img {
   transform: rotate(180deg);
+}
+.dropdown.active .dropdown__img path,
+.dropdown.active .dropdown__img .dropdown:hover path {
+  fill: #000000;
 }
 .dropdown__content {
   margin-top: 0.625rem;
@@ -11201,6 +11214,11 @@ textarea.form-control-lg {
   display: block;
 }
 
+@media only screen and (max-width: 640px) {
+  .nav {
+    display: none;
+  }
+}
 .intro {
   margin-top: 2.75rem;
   max-width: 1453px;
@@ -11275,13 +11293,13 @@ textarea.form-control-lg {
   position: absolute;
   height: 2px;
   width: 0rem;
-  right: 1.8rem;
+  right: 1.4rem;
   top: 0.3125rem;
   background-color: #fff;
   transition: width 0.4s;
 }
 .pointer.active .line {
-  width: 12rem;
+  width: 10rem;
 }
 .line__top-text {
   position: absolute;
@@ -11305,6 +11323,37 @@ textarea.form-control-lg {
   opacity: 1;
 }
 
+@media only screen and (max-width: 640px) {
+  .intro {
+    margin-top: 0;
+    padding: 0 3.75rem;
+  }
+  .intro__title {
+    margin-top: 5.25rem;
+    font-size: 4.5rem;
+  }
+  .intro__cta {
+    margin-top: 4rem;
+    flex-direction: column;
+  }
+  .intro__lists {
+    width: 100%;
+    margin-right: 0;
+    justify-content: space-between;
+  }
+  .intro__list {
+    margin-right: 3.625rem !important;
+  }
+
+  .work-type__container {
+    margin-top: 6rem;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .intro {
+    padding: 0 0.75rem;
+  }
+}
 :root {
   --bs-body-font-family: "Gotham", sans-serif;
   --bs-body-color: #fff;
@@ -11315,15 +11364,10 @@ textarea.form-control-lg {
   box-sizing: border-box;
 }
 
-body {
-  overflow: hidden;
-}
-
 .user-map {
-  position: absolute;
+  position: fixed;
   z-index: -1;
-  left: 50%;
-  top: 50%;
+  transition: left 0.6s;
   transform: translate(-50%, -50%);
 }
 
