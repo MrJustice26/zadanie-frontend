@@ -127,6 +127,8 @@ exports.createPointer = createPointer;
 exports.drawPointer = drawPointer;
 exports.generateCoords = generateCoords;
 
+var _main = require("./main");
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -139,27 +141,32 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var $imageMap = document.querySelector(".user-map");
 var $areas = document.querySelectorAll(".area-position");
 var eventsPlace = [];
-var eventCoordsCalcX;
 
 function createPointer() {
-  var $pointer = document.createElement("div");
-  $pointer.classList.add("pointer");
-  $pointer.insertAdjacentHTML("afterbegin", "\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    ");
-  document.body.appendChild($pointer);
-  window.addEventListener("scroll", function () {
-    activeTitle && drawPointer($pointer, activeTitle);
-  });
-  window.addEventListener("resize", function () {
-    activeTitle && drawPointer($pointer, activeTitle);
-  });
+  // Tworzymy nasz element
+  var $pointer = document.createElement("div"); // Nadajemy dla div elementa klasę pointer
+
+  $pointer.classList.add("pointer"); // Wstawiamy w div kontent HTML
+
+  $pointer.insertAdjacentHTML("afterbegin", "\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    "); // Wstawiamy nasz div "pointer" do dokumentu DOM
+
+  document.body.appendChild($pointer); // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
+  // window.addEventListener("scroll", () => {
+  //     activeTitle && drawPointer($pointer, activeTitle)
+  // })
+  // window.addEventListener("resize", () => {
+  //     activeTitle && drawPointer($pointer, activeTitle)
+  // })
+
   return $pointer;
 }
 
 function drawPointer(el, title) {
-  var imageMapPosition = $imageMap.getBoundingClientRect();
+  var defaultMapSizes = [1556, 787];
+
+  var imageMapPosition = _main.$imageMap.getBoundingClientRect();
 
   var _generateCoords = generateCoords(title, imageMapPosition),
       _generateCoords2 = _slicedToArray(_generateCoords, 4),
@@ -169,15 +176,16 @@ function drawPointer(el, title) {
       imageMapPositionY = _generateCoords2[3];
 
   var pointerX = coordsX + imageMapPositionX;
-  var pointerY = coordsY + imageMapPositionY + window.pageYOffset;
-  $imageMap.style.left = "calc(50% + ".concat(imageMapPosition.width / 2 - coordsX, "px)");
+  console.log(coordsY);
+  var pointerY = coordsY + imageMapPositionY;
+  moveMap(coordsX, imageMapPosition, defaultMapSizes);
   el.style.left = "50%";
   var lineWidth = 240;
   var distanceBetweenCircleAndLine = 22.4;
   el.querySelector(".line").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem";
   el.querySelector(".line__top-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
   el.querySelector(".line__bottom-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
-  el.style.top = pointerY + "px";
+  el.style.top = Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px";
 }
 
 function generateCoords(title, imageMapPosition) {
@@ -203,25 +211,54 @@ $areas.forEach(function (area) {
     }).slice(0, 2)
   });
 });
+
+function moveMap(coords, imageMapPosition, mapSize) {
+  console.log(imageMapPosition, coords, mapSize);
+  _main.$imageMap.style.left = "calc(50% + ".concat(Math.floor(imageMapPosition.width / 2 - coords * (imageMapPosition.width / mapSize[0])), "px)");
+}
+},{"./main":"js/main.js"}],"js/utils.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toColor = toColor;
+
+function toColor(arr, color) {
+  arr.forEach(function (item) {
+    item.style.color = color;
+  });
+}
 },{}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.$imageMap = void 0;
+
 var _pointer = require("./pointer");
+
+var _utils = require("./utils");
 
 var $listItems = document.querySelectorAll(".list__item");
 var $introTitle = document.querySelector(".intro__title");
 var $dropdown = document.querySelector(".dropdown");
-var desiredColor = "#700507";
-var activeTitle;
+var $imageMap = document.querySelector(".user-map");
+exports.$imageMap = $imageMap;
+var activeTitle; // Dodajemy eventListener na przycisk dropdown'a, gdy użytkownik klika na container, w którym są nadpis PL i strzałka w dół to nasz dropdown się otwiera.
+
 $dropdown.querySelector(".dropdown__btn").addEventListener("click", function (e) {
   $dropdown.classList.toggle("active");
 });
 document.addEventListener('click', function (e) {
-  // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest ten samy,
+  // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
   // to nic się nie dzieje
   if (activeTitle === e.target.textContent) {
     return;
-  }
+  } // Gdy użytkownik kliknął na element z listy i on jest aktywny i później klika na następny element (nie identycznego do poprzedniego)
+  // To usuwamy poprzednią kropkę z informacją o wydarzeniu, na który użytkownik kliknął wcześniej
+
 
   var $pointer = document.querySelectorAll(".pointer");
   $pointer === null || $pointer === void 0 ? void 0 : $pointer.forEach(function (el) {
@@ -229,33 +266,45 @@ document.addEventListener('click', function (e) {
     setTimeout(function () {
       el.remove();
     }, 300);
-  });
-  activeTitle = '';
+  }); // Resetujemy aktywny tytuł
+
+  activeTitle = ''; // Sprawdzamy, czy użytkownik kliknął na element z listy
 
   if (e.target.classList.contains("list__item")) {
-    var _$pointer = (0, _pointer.createPointer)();
+    // Tworzymy punkt do pokazania na naszej mapie
+    var _$pointer = (0, _pointer.createPointer)(); // Nadajemy dla activeTitle aktualny tytuł wydarzenia (np. "Paris Air Show")
 
-    activeTitle = e.target.textContent;
-    (0, _pointer.drawPointer)(_$pointer, e.target.textContent);
+
+    activeTitle = e.target.textContent; // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce
+
+    (0, _pointer.drawPointer)(_$pointer, e.target.textContent); // Nadajemy tekst dla naszego tekstu, który znajduje się nad linią i pod linią ( ta linia jest przyczepiona do punktu )
+
     _$pointer.querySelector(".line__top-text").textContent = e.target.textContent;
-    _$pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle;
-    $introTitle.classList.add("hide");
-    toColor($listItems, desiredColor);
-    e.target.style.color = "white";
+    _$pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle; // W ten moment chowamy tytuł "World ahead", nadając mu klasę w DOM "hide" 
+
+    $introTitle.classList.add("hide"); // Utylita, zmieniająca kolor wszystkich elementów z listy na odpowiedni, który podaliśmy jako drugi argument.
+
+    (0, _utils.toColor)($listItems, window.innerWidth > 600 ? "rgba(112, 5, 7, 1)" : "rgba(112, 5, 7, 0)"); // Nadajemy kolor biały dla aktywnego elementu z listy, czyli element, na który użytkownik kliknął
+
+    window.innerWidth > 600 && (e.target.style.color = "white"); // Pokazujemy nasz punkt na mapie
 
     _$pointer.classList.add("active");
   } else {
+    // Gdy użytkownik wcześniej kliknął na element z listy i póżniej kliknął gdzieś indziej, to mapa wraca na standardową pozycję,  
+    // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem)
+    $imageMap.style.left = "50%";
     $introTitle.classList.remove("hide");
-    toColor($listItems, "#fff");
+    (0, _utils.toColor)($listItems, "#fff");
   }
 });
-
-function toColor(arr, color) {
-  arr.forEach(function (item) {
-    item.style.color = color;
-  });
-}
-},{"./pointer":"js/pointer.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var $mobileNav = document.querySelector(".nav-mobile__background");
+document.querySelector(".nav__btn").addEventListener("click", function () {
+  $mobileNav.classList.add("active");
+});
+document.querySelector(".nav-mobile__btn").addEventListener("click", function () {
+  $mobileNav.classList.remove("active");
+});
+},{"./pointer":"js/pointer.js","./utils":"js/utils.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -283,7 +332,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "20279" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "11278" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

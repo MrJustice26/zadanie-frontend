@@ -1,12 +1,14 @@
-const $imageMap = document.querySelector(".user-map")
+import {$imageMap } from "./main"
+
 const $areas = document.querySelectorAll(".area-position")
 const eventsPlace = []
 
-let eventCoordsCalcX;
-
 export function createPointer(){
+    // Tworzymy nasz element
     const $pointer = document.createElement("div")
+    // Nadajemy dla div elementa klasę pointer
     $pointer.classList.add("pointer")
+    // Wstawiamy w div kontent HTML
     $pointer.insertAdjacentHTML("afterbegin", `
         <div class="line">
             <span class="line__top-text">
@@ -15,26 +17,30 @@ export function createPointer(){
             </span>
         </div>
     `)
+    // Wstawiamy nasz div "pointer" do dokumentu DOM
     document.body.appendChild($pointer)
-    window.addEventListener("scroll", () => {
-        activeTitle && drawPointer($pointer, activeTitle)
-    })
-    window.addEventListener("resize", () => {
-        activeTitle && drawPointer($pointer, activeTitle)
-    })
+    
+    // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
+    // window.addEventListener("scroll", () => {
+    //     activeTitle && drawPointer($pointer, activeTitle)
+    // })
+    // window.addEventListener("resize", () => {
+    //     activeTitle && drawPointer($pointer, activeTitle)
+    // })
     return $pointer;
 }
 
 
 export function drawPointer(el, title){
     
+    const defaultMapSizes = [1556, 787]
     
     const imageMapPosition = $imageMap.getBoundingClientRect()
     const [coordsX, imageMapPositionX, coordsY, imageMapPositionY] = generateCoords(title,imageMapPosition)
-    
     const pointerX = coordsX + imageMapPositionX
-    const pointerY = coordsY + imageMapPositionY + window.pageYOffset
-    $imageMap.style.left = `calc(50% + ${imageMapPosition.width/2-coordsX}px)`
+    console.log(coordsY)
+    const pointerY = coordsY + imageMapPositionY
+    moveMap(coordsX, imageMapPosition, defaultMapSizes)
     el.style.left = `50%`
     
     const lineWidth = 240;
@@ -45,7 +51,7 @@ export function drawPointer(el, title){
     el.querySelector(".line__top-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
     el.querySelector(".line__bottom-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
     
-    el.style.top = pointerY + "px"
+    el.style.top = Math.floor(pointerY*(imageMapPosition['height']/defaultMapSizes[1])) + "px"
 }
 
 export function generateCoords(title, imageMapPosition){
@@ -67,3 +73,8 @@ $areas.forEach(area => {
         }
     )  
 })
+
+function moveMap(coords, imageMapPosition, mapSize){
+    console.log(imageMapPosition,coords, mapSize)
+    $imageMap.style.left = `calc(50% + ${Math.floor(imageMapPosition.width/2-coords*(imageMapPosition.width/mapSize[0]))}px)`
+}

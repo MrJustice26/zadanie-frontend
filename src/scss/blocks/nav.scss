@@ -1,5 +1,4 @@
 .nav {
-  margin-top: $margin-space;
   &__container {
     display: flex;
     align-items: center;
@@ -12,10 +11,6 @@
 
     justify-content: space-between;
     list-style: none;
-
-    &:first-child {
-      margin-right: 16.375rem;
-    }
   }
   &__link {
     text-transform: uppercase;
@@ -29,9 +24,72 @@
       color: black !important;
     }
   }
-  &__logo {
-    position: relative;
-    right: 5.5rem;
+
+  &-mobile {
+    &__background {
+      transition: transform 0.4s, opacity 0.3s;
+      opacity: 0;
+      transform: translateY(-50px);
+      z-index: -1;
+      &.active {
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 1;
+      }
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      background-color: #6a0609;
+    }
+
+    &__container {
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      height: 100%;
+    }
+
+    &__inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+    }
+
+    &__list {
+      margin: 0;
+      height: 100%;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 0;
+    }
+
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      & > a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+    }
+
+    &__btn {
+      position: fixed;
+      border: none;
+      background-color: inherit;
+      right: 0;
+
+      & > svg > path {
+        fill: #fff;
+      }
+    }
   }
 }
 
@@ -50,6 +108,9 @@
     text-decoration: none;
     transition: color 0.2s;
     &:hover {
+      color: #fff;
+    }
+    .dropdown.active & {
       color: black;
     }
   }
@@ -89,11 +150,5 @@
     .dropdown.active & {
       display: block;
     }
-  }
-}
-
-@media only screen and (max-width: 640px) {
-  .nav {
-    display: none;
   }
 }
