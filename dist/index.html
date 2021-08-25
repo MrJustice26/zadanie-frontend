@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Van Hagen</title>
     <link rel="stylesheet" href="/scss.6b84482b.css">
-
-
-
 <script src="/scss.6b84482b.js"></script></head>
 <body>
+
+    <!-- Mapa świata i punkty z ich koordynatami -->
     <img src="/map.fe1c6ce7.png" alt="Map of earth" class="user-map" usemap="#image-map" style="left: 50%; top: 50%;">
     <map name="image-map">
         <area target="" class="area-position" alt="EBACE" title="EBACE" href="" coords="740,190,1" shape="circle">
@@ -25,23 +24,23 @@
         <area target="" class="area-position" alt="Cersaie" title="Cersaie" href="" coords="755,201,1" shape="circle">
         <area target="" class="area-position" alt="ISH" title="ISH" href="" coords="1307,232,1" shape="circle">
     </map>
+
+    <!-- Nav -->
     <nav class="nav navbar-expand-md navbar-dark mt-5 mb-sm-5">
-        <div class="nav__container container-fluid p-sm-3 d-sm-flex justify-content-between">
-            <a href="#" class="nav__item nav__logo d-flex">
+        <div class="nav__container pe-4 ps-4 pe-sm-5 ps-sm-5 d-flex justify-content-between">
+            <a href="#" class="nav__logo d-flex">
                 <img src="/logo.b37d81ec.svg" alt="logo">
             </a>
-            <button class="nav__btn navbar-toggler" type="button" data-toggle="collapse">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
-                  </svg>
+            <button class="nav__btn position-absolute" type="button" data-toggle="collapse">
+                <svg fill="#fff" style="max-width:16px" version="1.1" wdth="16" height="16" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122.879px" viewBox="0 0 122.879 103.609" enable-background="new 0 0 122.879 103.609" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M10.368,0h102.144c5.703,0,10.367,4.665,10.367,10.367v0 c0,5.702-4.664,10.368-10.367,10.368H10.368C4.666,20.735,0,16.07,0,10.368v0C0,4.665,4.666,0,10.368,0L10.368,0z M10.368,82.875 h102.144c5.703,0,10.367,4.665,10.367,10.367l0,0c0,5.702-4.664,10.367-10.367,10.367H10.368C4.666,103.609,0,98.944,0,93.242l0,0 C0,87.54,4.666,82.875,10.368,82.875L10.368,82.875z M10.368,41.438h102.144c5.703,0,10.367,4.665,10.367,10.367l0,0 c0,5.702-4.664,10.368-10.367,10.368H10.368C4.666,62.173,0,57.507,0,51.805l0,0C0,46.103,4.666,41.438,10.368,41.438 L10.368,41.438z"></path></g></svg>
             </button>
-            <div class="nav__inner collapse navbar-collapse ms-md-5 justify-content-between">
+            <div class="nav__inner collapse navbar-collapse justify-content-between">
                 
-                <ul class="nav__item d-flex">
+                <ul class="nav__item justify-content-around">
                     <li><a href="#" class="nav__link">Our work</a></li>
                     <li><a href="#" class="nav__link">Technology process</a></li>
                 </ul>
-                <ul class="nav__item d-flex">
+                <ul class="nav__item justify-content-around">
                     <li><a href="#" class="nav__link">About us</a></li>
                     <li><a href="#" class="nav__link">Contact</a></li>
                     <li class="nav__link d-flex dropdown">
@@ -51,14 +50,14 @@
                         </a>
                         
                         <ul class="dropdown__content">
-                            <li>ENG</li>
-                            <li>RU</li>
+                            <li><a href="#">ENG</a></li>
+                            <li><a href="#">RU</a></li>
                         </ul>
                     </li>
                 </ul>
-            </div>
+            </div> <!-- /.nav__inner -->
             
-        </div>
+        </div> <!-- /.nav__container -->
 
         <div class="nav-mobile__background d-md-none">
             
@@ -76,46 +75,51 @@
                         <li class="nav-mobile__item"><a href="#">Contact</a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div> <!-- /.nav-mobile__container -->
+        </div> <!-- /.nav-mobile__background -->
     </nav>
-    <main class="intro container-fluid pt-5 mt-0 mt-sm-5">
-        <h1 class="intro__title">World ahead</h1>
-        <div class="intro__cta d-flex flex-column flex-md-row justify-content-md-between">
-            <div class="intro__lists d-flex flex-wrap flex-md-nowrap justify-content-between mt-5 mb-5 mb-md-0 w-100 gap-3">
-                <ul class="intro__list ">
-                    <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
-                    <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
-                    <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
-                    <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
-                    <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
-                    <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
-                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
-                </ul>
-                <ul class="intro__list">
-                    <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
-                    <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
-                    <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
-                    <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
-                    <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
-                    <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
-                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
-                </ul>
-                <ul class="intro__list">
-                    <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
-                    <li class="list__item" data-subtitle="Munich (Germany)">BAU</li>
-                    <li class="list__item" data-subtitle="Paris (France)">Paris Air Show</li>
-                    <li class="list__item" data-subtitle="Bologne (Italy)">Cersaie</li>
-                    <li class="list__item" data-subtitle="Beijing (China)">ISH</li>
-                </ul>
-            </div>
-            <div class="work-type__container">
-                <h3 class="work-type__title">We work around the world</h3>
-                <p class="work-type__text">
-                    Our work is based on close relations and business wise flexibility worldwide. Advanced managment system and hi tech facility allows us to manage big projects in short time.
-                </p>
-            </div>
-        </div>
+
+    <!-- Intro -->
+    <main class="intro pt-5 mt-0 mt-sm-5">
+        <div class="intro__container pe-4 ps-4 pe-sm-5 ps-sm-5">
+            <h1 class="intro__title">World ahead</h1>
+            <div class="intro__cta pb-5 d-flex flex-column flex-md-row align-items-sm-center align-items-md-baseline justify-content-md-between">
+                <div class="intro__lists d-flex flex-wrap flex-md-nowrap mt-5 mb-5 mb-md-0 gap-3">
+                    <ul class="intro__list ">
+                        <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
+                        <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
+                        <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
+                        <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
+                        <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
+                        <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
+                        <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
+                    </ul>
+                    <ul class="intro__list">
+                        <li class="list__item" data-subtitle="Geneva (Italy)">EBACE</li>
+                        <li class="list__item" data-subtitle="Washington (USA)">NBAA</li>
+                        <li class="list__item" data-subtitle="Vienna (Austria)">Medica</li>
+                        <li class="list__item" data-subtitle="Shanghai (China)">Orgatec</li>
+                        <li class="list__item" data-subtitle="Cologne (Germany)">IDS</li>
+                        <li class="list__item" data-subtitle="Hannover  (Germany)">Domotex</li>
+                        <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
+                    </ul>
+                    <ul class="intro__list">
+                        <li class="list__item" data-subtitle="Moscow (Russia)">Mosbuild</li>
+                        <li class="list__item" data-subtitle="Munich (Germany)">BAU</li>
+                        <li class="list__item" data-subtitle="Paris (France)">Paris Air Show</li>
+                        <li class="list__item" data-subtitle="Bologne (Italy)">Cersaie</li>
+                        <li class="list__item" data-subtitle="Beijing (China)">ISH</li>
+                    </ul>
+                </div> <!-- /.intro__lists -->
+                <div class="work-type__container ms-md-5">
+                    <h3 class="work-type__title">We work around the world</h3>
+                    <p class="work-type__text">
+                        Our work is based on close relations and business wise flexibility worldwide. Advanced managment system and hi tech facility allows us to manage big projects in short time.
+                    </p>
+                </div>
+            </div> <!-- /.intro__cta -->
+        </div> <!-- /.intro__container -->
+        
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/main.fb6bbcaf.js"></script>

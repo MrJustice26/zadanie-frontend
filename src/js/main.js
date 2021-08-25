@@ -1,30 +1,42 @@
-import { createPointer, drawPointer } from "./pointer";
+import { createPointer, showPointer } from "./pointer";
+import './mobile-nav';
 
+// Otrzymujemy elementy z DOM
 const $listItems = $(".list__item")
 const $introTitle = $(".intro__title")
 const $dropdown = $(".dropdown")
-
 export const $imageMap = $(".user-map")
 
 
 
 
 
-
+// Jest przydatne dla sprawdzenia, czy użytkownik kliknął 
 let activeTitle;
+
 
 
 
 // Dodajemy eventListener na przycisk dropdown'a, gdy użytkownik klika na container, w którym są nadpis PL i strzałka w dół to nasz dropdown się otwiera.
 $(".dropdown__btn").on("click", (e) => {
-    $dropdown.toggleClass("active")
+    setTimeout(() => {
+        $dropdown.toggleClass("active")
+    }, 1)
 })
 
+
+// AddEventListener, gdy użytkownik w coś kliknął na stronie 
 $(document).on('click', (e) => {
-    
+
     const $target = $(e.target)
+
     
 
+    // Sprawdza, czy dropdown jest aktywny i gdy nie klikneliśmy w coś wewnątrz dropdown'a, wtedy go zamykamy
+    if(!$target.parents(".dropdown").hasClass("dropdown") && !$target.hasClass("dropdown")) {
+        $dropdown.removeClass("active")
+    }
+    
     // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
     // to nic się nie dzieje
     if(activeTitle === $target.text()){
@@ -37,64 +49,67 @@ $(document).on('click', (e) => {
     const $pointer = $(".pointer")
     $pointer.removeClass("active")
     $pointer.remove()
-    // console.log($pointer)
-    // $pointer?.forEach(el => {
-    //     el.classList.remove("active")
-    //     setTimeout(() => {
-    //         el.remove()
-    //     }, 300)
-    // })
+
+    
 
     // Resetujemy aktywny tytuł
     activeTitle = ''
 
     
-    // Sprawdzamy, czy użytkownik kliknął na element z listy
-    if($target.hasClass("list__item")){
+    // Sprawdzamy, czy użytkownik kliknął na element z listy i czy ten element nie posiada klasy hide
+    // Jeżeli szerokość ekranu jest większa 768px to użytkownik może kliknąć na inny element z listy
+    // Elementy z listy, którzy posiadają klasę hide są schowane, gdy szerokość ekranu jest mniejsza, niż 768px
+    // Czyli wtedy ignorujemy klik na element z listy
+    if($target.hasClass("list__item") && (!$target.hasClass("hide") || window.innerWidth >= 768)){
 
-        // Tworzymy punkt do pokazania na naszej mapie
+        // Tworzymy nasz punkt z zawartościami i inicjujemy go w DOM
         const $pointer = createPointer();
-
+        
         // Nadajemy dla activeTitle aktualny tytuł wydarzenia (np. "Paris Air Show")
         activeTitle = $target.text()
 
-        // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce
-        drawPointer($pointer, $target.text())
+        // AddEventListener, gdy użytkownik zmniejsza/zwiększa rozmiar ekran, to punkt, zostaje cały czas na miejscu 
+        $(window).on("resize", () => {
+            activeTitle && showPointer($pointer, activeTitle)
+        })
 
-        // Nadajemy tekst dla naszego tekstu, który znajduje się nad linią i pod linią ( ta linia jest przyczepiona do punktu )
+        
+
+        // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce,
+        // albo jeżeli obraz mapy nie jest ucięty (czyli zajmuje szerokość 100%) to pokazujemy punkt na mapie bez samego przesuwania
+        showPointer($pointer, $target.text())
+
+        // Nadajemy tekst dla naszego elementów, które znajdują się w div'e "pointer"
         $(".line__top-text").text($target.text())
         $(".line__bottom-text").text($target.data("subtitle"))
 
         // W ten moment chowamy tytuł "World ahead", nadając mu klasę w DOM "hide" 
         $introTitle.addClass("hide")
 
-        // Zmieniamy kolor wszystkich elementów z listy.
-        $listItems.css('color', `${window.innerWidth > 600 ? "rgba(112, 5, 7, 1)" : "rgba(112, 5, 7, 0)"}`)
-        // Nadajemy kolor biały dla aktywnego elementu z listy, czyli element, na który użytkownik kliknął
-        window.innerWidth > 600 && ($target.css("color", "#fff"))
 
-        // Pokazujemy nasz punkt na mapie
+        // Zmieniamy kolor wszystkich elementów z listy, nadając im klasę hide.
+        $listItems.addClass("hide")
+        
+        // Usuwamy klasę hide z elementu, na który kliknęliśmy, by pokazać, że jest aktywny
+        window.innerWidth > 768 && $target.removeClass("hide")
+
+        // Wyświetlamy nasz punkt na mapie
         $pointer.addClass("active")
     } 
     else {
 
         // Gdy użytkownik wcześniej kliknął na element z listy i póżniej kliknął gdzieś indziej, to mapa wraca na standardową pozycję,  
-        // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem)
+        // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem na element z listy)
         $imageMap.css ("left", "50%");
         $introTitle.removeClass("hide") 
-        $listItems.css('color', "#fff")
+        $listItems.removeClass("hide")
+
     }
 })
 
-const $mobileNav = $(".nav-mobile__background")
 
-$(".nav__btn").on("click", () => {
-    $mobileNav.addClass("active")
-})
 
-$(".nav-mobile__btn").on("click", () => {
-    $mobileNav.removeClass("active")
-})
+
 
 
 

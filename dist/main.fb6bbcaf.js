@@ -124,8 +124,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.createPointer = createPointer;
-exports.drawPointer = drawPointer;
-exports.generateCoords = generateCoords;
+exports.showPointer = showPointer;
 
 var _main = require("./main");
 
@@ -141,55 +140,23 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// W eventsDetails znajduje się lista obiektów. W każdym obiekcie znajduje się tytuł wydarzenia oraz jego koordynaty, a ta informacja jest pobrana z każdego elementa, który posiada klasę "area-position"
 var $areas = document.querySelectorAll(".area-position");
-var eventsPlace = [];
+var eventsDetails = [];
 
 function createPointer() {
-  // Tworzymy nasz element
-  var $pointer = $("\n    <div class=\"pointer\">\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    </div>"); // Nadajemy dla div elementa klasę pointer
-  // $pointer.addClass("pointer")
-  // Wstawiamy w div kontent HTML
-
-  $("body").append($pointer); // Wstawiamy nasz div "pointer" do dokumentu DOM
-  // document.body.appendChild($pointer)
-  // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
-  // window.addEventListener("scroll", () => {
-  //     activeTitle && drawPointer($pointer, activeTitle)
-  // })
-  // window.addEventListener("resize", () => {
-  //     activeTitle && drawPointer($pointer, activeTitle)
-  // })
-
+  var $pointer = $("\n    <div class=\"pointer\">\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    </div>");
+  $("body").append($pointer);
   return $pointer;
 }
 
-function drawPointer(el, title) {
-  var defaultMapSizes = [1556, 787];
+function showPointer(el, title) {
+  // Potrzebne ono jest, gdy obraz mapy się zwiększa bądź się zmniejsza to wtedy my bierzemy współczynnik rozmiaru mapy powiększonnej/pomniejszonej i jej standardowego rozmiaru
+  var defaultMapSizes = [1556, 787]; // Potrzebne ono jest na obliczenie x y dla punktu
 
   var imageMapPosition = _main.$imageMap[0].getBoundingClientRect();
 
-  var _generateCoords = generateCoords(title, imageMapPosition),
-      _generateCoords2 = _slicedToArray(_generateCoords, 4),
-      coordsX = _generateCoords2[0],
-      imageMapPositionX = _generateCoords2[1],
-      coordsY = _generateCoords2[2],
-      imageMapPositionY = _generateCoords2[3];
-
-  var pointerX = coordsX + imageMapPositionX;
-  var pointerY = coordsY + imageMapPositionY;
-  moveMap(coordsX, imageMapPosition, defaultMapSizes);
-  el.css("left", "50%");
-  var lineWidth = 240;
-  var distanceBetweenCircleAndLine = 22.4;
-  $(".line").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem");
-  $(".line__top-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
-  $(".line__bottom-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
-  el.css("top", Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px");
-}
-
-function generateCoords(title, imageMapPosition) {
-  // eventCoords - zmienna, w której znajduje się nazwa eventu i koordynaty (x, y) gdzie dane wydarzenie się odbędzie
-  var eventCoords = eventsPlace.filter(function (event) {
+  var eventCoords = eventsDetails.filter(function (event) {
     return event.title === title;
   })[0]['coords'];
 
@@ -197,24 +164,58 @@ function generateCoords(title, imageMapPosition) {
       coordsX = _eventCoords[0],
       coordsY = _eventCoords[1];
 
-  var x = imageMapPosition.x,
-      y = imageMapPosition.y;
-  return [coordsX, x, coordsY, y];
-}
+  var imageMapPositionX = imageMapPosition['x'];
+  var imageMapPositionY = imageMapPosition['y']; // Otrzymujemy koordynaty, które uwzględniają jaki jest rozmiar mapy, szerokość/wysokość ekranu
+
+  var pointerX = coordsX + imageMapPositionX;
+  var pointerY = coordsY + imageMapPositionY; // Jeżeli mapa nie jest ucięta, to wtedy pokazujemy punkt na mapie bez kręcenia mapy.
+  // W przeciwnym wypadku (gdy mapa jest ucięta, chociaż na 2px, to mapa się obraca do punktu.
+
+  if (imageMapPosition['x'] === 0) {
+    var posY = coordsY * (imageMapPosition['height'] / defaultMapSizes[1]);
+    var posX = coordsX * (imageMapPosition['width'] / defaultMapSizes[0]) + imageMapPositionX;
+    el.css("left", posX);
+    el.css("top", posY);
+  } else {
+    moveMap(coordsX, imageMapPosition, defaultMapSizes);
+    el.css("left", "50%");
+    el.css("top", Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px");
+  }
+
+  var lineWidth = 240;
+  var distanceBetweenCircleAndLine = 22.4;
+  $(".line").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem");
+  $(".line__top-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
+  $(".line__bottom-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
+} // Otrzymujemy dane wydarzenia, czyli koordynaty i nazwę tego wydarzenia, otrzymując obiekt i ten obiekt wstawiamy do zmiennej eventsDetails.
+
 
 $areas.forEach(function (area) {
-  eventsPlace.push({
+  eventsDetails.push({
     title: area.title,
     coords: area.coords.split(",").map(function (val) {
       return +val;
     }).slice(0, 2)
   });
-});
+}); // Funkcja do przesuwania mapy
 
 function moveMap(coords, imageMapPosition, mapSize) {
   _main.$imageMap.css('left', "calc(50% + ".concat(Math.floor(imageMapPosition.width / 2 - coords * (imageMapPosition.width / mapSize[0])), "px)"));
 }
-},{"./main":"js/main.js"}],"js/main.js":[function(require,module,exports) {
+},{"./main":"js/main.js"}],"js/mobile-nav.js":[function(require,module,exports) {
+// mobileNav jest przeznaczony dla nawigacji, która jest dostępna, gdy szerokość ekranu jest mniejsza, niż 768px
+// Otrzymujemy element z DOM
+var $mobileNav = $(".nav-mobile__background"); // Przy kliknięciu otwiera się nawigacja 
+// Element .nav__btn pokazuje się na ekranie, gdy szerokość jest mniejsza, niż 768px
+
+$(".nav__btn").on("click", function () {
+  $mobileNav.addClass("active");
+}); // W tym przypadku nawigacja zamyka się
+
+$(".nav-mobile__btn").on("click", function () {
+  $mobileNav.removeClass("active");
+});
+},{}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -224,19 +225,31 @@ exports.$imageMap = void 0;
 
 var _pointer = require("./pointer");
 
+require("./mobile-nav");
+
+// Otrzymujemy elementy z DOM
 var $listItems = $(".list__item");
 var $introTitle = $(".intro__title");
 var $dropdown = $(".dropdown");
-var $imageMap = $(".user-map");
+var $imageMap = $(".user-map"); // Jest przydatne dla sprawdzenia, czy użytkownik kliknął 
+
 exports.$imageMap = $imageMap;
 var activeTitle; // Dodajemy eventListener na przycisk dropdown'a, gdy użytkownik klika na container, w którym są nadpis PL i strzałka w dół to nasz dropdown się otwiera.
 
 $(".dropdown__btn").on("click", function (e) {
-  $dropdown.toggleClass("active");
-});
+  setTimeout(function () {
+    $dropdown.toggleClass("active");
+  }, 1);
+}); // AddEventListener, gdy użytkownik w coś kliknął na stronie 
+
 $(document).on('click', function (e) {
-  var $target = $(e.target); // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
+  var $target = $(e.target); // Sprawdza, czy dropdown jest aktywny i gdy nie klikneliśmy w coś wewnątrz dropdown'a, wtedy go zamykamy
+
+  if (!$target.parents(".dropdown").hasClass("dropdown") && !$target.hasClass("dropdown")) {
+    $dropdown.removeClass("active");
+  } // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
   // to nic się nie dzieje
+
 
   if (activeTitle === $target.text()) {
     return;
@@ -246,52 +259,46 @@ $(document).on('click', function (e) {
 
   var $pointer = $(".pointer");
   $pointer.removeClass("active");
-  $pointer.remove(); // console.log($pointer)
-  // $pointer?.forEach(el => {
-  //     el.classList.remove("active")
-  //     setTimeout(() => {
-  //         el.remove()
-  //     }, 300)
-  // })
-  // Resetujemy aktywny tytuł
+  $pointer.remove(); // Resetujemy aktywny tytuł
 
-  activeTitle = ''; // Sprawdzamy, czy użytkownik kliknął na element z listy
+  activeTitle = ''; // Sprawdzamy, czy użytkownik kliknął na element z listy i czy ten element nie posiada klasy hide
+  // Jeżeli szerokość ekranu jest większa 768px to użytkownik może kliknąć na inny element z listy
+  // Elementy z listy, którzy posiadają klasę hide są schowane, gdy szerokość ekranu jest mniejsza, niż 768px
+  // Czyli wtedy ignorujemy klik na element z listy
 
-  if ($target.hasClass("list__item")) {
-    // Tworzymy punkt do pokazania na naszej mapie
+  if ($target.hasClass("list__item") && (!$target.hasClass("hide") || window.innerWidth >= 768)) {
+    // Tworzymy nasz punkt z zawartościami i inicjujemy go w DOM
     var _$pointer = (0, _pointer.createPointer)(); // Nadajemy dla activeTitle aktualny tytuł wydarzenia (np. "Paris Air Show")
 
 
-    activeTitle = $target.text(); // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce
+    activeTitle = $target.text(); // AddEventListener, gdy użytkownik zmniejsza/zwiększa rozmiar ekran, to punkt, zostaje cały czas na miejscu 
 
-    (0, _pointer.drawPointer)(_$pointer, $target.text()); // Nadajemy tekst dla naszego tekstu, który znajduje się nad linią i pod linią ( ta linia jest przyczepiona do punktu )
+    $(window).on("resize", function () {
+      activeTitle && (0, _pointer.showPointer)(_$pointer, activeTitle);
+    }); // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce,
+    // albo jeżeli obraz mapy nie jest ucięty (czyli zajmuje szerokość 100%) to pokazujemy punkt na mapie bez samego przesuwania
+
+    (0, _pointer.showPointer)(_$pointer, $target.text()); // Nadajemy tekst dla naszego elementów, które znajdują się w div'e "pointer"
 
     $(".line__top-text").text($target.text());
     $(".line__bottom-text").text($target.data("subtitle")); // W ten moment chowamy tytuł "World ahead", nadając mu klasę w DOM "hide" 
 
-    $introTitle.addClass("hide"); // Zmieniamy kolor wszystkich elementów z listy.
+    $introTitle.addClass("hide"); // Zmieniamy kolor wszystkich elementów z listy, nadając im klasę hide.
 
-    $listItems.css('color', "".concat(window.innerWidth > 600 ? "rgba(112, 5, 7, 1)" : "rgba(112, 5, 7, 0)")); // Nadajemy kolor biały dla aktywnego elementu z listy, czyli element, na który użytkownik kliknął
+    $listItems.addClass("hide"); // Usuwamy klasę hide z elementu, na który kliknęliśmy, by pokazać, że jest aktywny
 
-    window.innerWidth > 600 && $target.css("color", "#fff"); // Pokazujemy nasz punkt na mapie
+    window.innerWidth > 768 && $target.removeClass("hide"); // Wyświetlamy nasz punkt na mapie
 
     _$pointer.addClass("active");
   } else {
     // Gdy użytkownik wcześniej kliknął na element z listy i póżniej kliknął gdzieś indziej, to mapa wraca na standardową pozycję,  
-    // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem)
+    // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem na element z listy)
     $imageMap.css("left", "50%");
     $introTitle.removeClass("hide");
-    $listItems.css('color', "#fff");
+    $listItems.removeClass("hide");
   }
 });
-var $mobileNav = $(".nav-mobile__background");
-$(".nav__btn").on("click", function () {
-  $mobileNav.addClass("active");
-});
-$(".nav-mobile__btn").on("click", function () {
-  $mobileNav.removeClass("active");
-});
-},{"./pointer":"js/pointer.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./pointer":"js/pointer.js","./mobile-nav":"js/mobile-nav.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -319,7 +326,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "24329" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1036" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,10 +1,10 @@
-import {$imageMap } from "./main"
+import {$imageMap} from "./main"
 
+// W eventsDetails znajduje się lista obiektów. W każdym obiekcie znajduje się tytuł wydarzenia oraz jego koordynaty, a ta informacja jest pobrana z każdego elementa, który posiada klasę "area-position"
 const $areas = document.querySelectorAll(".area-position")
-const eventsPlace = []
+const eventsDetails = []
 
 export function createPointer(){
-    // Tworzymy nasz element
     const $pointer = $(`
     <div class="pointer">
         <div class="line">
@@ -14,33 +14,45 @@ export function createPointer(){
             </span>
         </div>
     </div>`)
-    // Nadajemy dla div elementa klasę pointer
-    // $pointer.addClass("pointer")
-    // Wstawiamy w div kontent HTML
-    $("body").append($pointer)
-    // Wstawiamy nasz div "pointer" do dokumentu DOM
-    // document.body.appendChild($pointer)
     
-    // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
-    // window.addEventListener("scroll", () => {
-    //     activeTitle && drawPointer($pointer, activeTitle)
-    // })
-    // window.addEventListener("resize", () => {
-    //     activeTitle && drawPointer($pointer, activeTitle)
-    // })
+    $("body").append($pointer)
     return $pointer;
 }
 
 
-export function drawPointer(el, title){
+export function showPointer(el, title){
+
+    // Potrzebne ono jest, gdy obraz mapy się zwiększa bądź się zmniejsza to wtedy my bierzemy współczynnik rozmiaru mapy powiększonnej/pomniejszonej i jej standardowego rozmiaru
     const defaultMapSizes = [1556, 787]
     
+    // Potrzebne ono jest na obliczenie x y dla punktu
     const imageMapPosition = $imageMap[0].getBoundingClientRect()
-    const [coordsX, imageMapPositionX, coordsY, imageMapPositionY] = generateCoords(title,imageMapPosition)
+
+    
+    const eventCoords = eventsDetails.filter(event => event.title === title)[0]['coords'] 
+
+    const [coordsX, coordsY] = eventCoords
+    const imageMapPositionX = imageMapPosition['x']
+    const imageMapPositionY = imageMapPosition['y']
+    // Otrzymujemy koordynaty, które uwzględniają jaki jest rozmiar mapy, szerokość/wysokość ekranu
     const pointerX = coordsX + imageMapPositionX
     const pointerY = coordsY + imageMapPositionY
-    moveMap(coordsX, imageMapPosition, defaultMapSizes)
-    el.css("left", "50%")
+
+    // Jeżeli mapa nie jest ucięta, to wtedy pokazujemy punkt na mapie bez kręcenia mapy.
+    // W przeciwnym wypadku (gdy mapa jest ucięta, chociaż na 2px, to mapa się obraca do punktu.
+    if(imageMapPosition['x'] === 0){
+        
+        const posY = coordsY*(imageMapPosition['height']/defaultMapSizes[1])
+        const posX = coordsX*(imageMapPosition['width']/defaultMapSizes[0]) + imageMapPositionX
+        el.css("left", posX)
+        el.css("top", posY)
+    } else {
+        moveMap(coordsX, imageMapPosition, defaultMapSizes)
+        el.css("left", "50%")
+        el.css("top", Math.floor(pointerY*(imageMapPosition['height']/defaultMapSizes[1])) + "px")
+
+    }
+    
     
     const lineWidth = 240;
     const distanceBetweenCircleAndLine = 22.4
@@ -49,23 +61,12 @@ export function drawPointer(el, title){
     $(".line").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem");
     $(".line__top-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
     $(".line__bottom-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
-    
-    el.css("top", Math.floor(pointerY*(imageMapPosition['height']/defaultMapSizes[1])) + "px")
 }
 
-export function generateCoords(title, imageMapPosition){
 
-    // eventCoords - zmienna, w której znajduje się nazwa eventu i koordynaty (x, y) gdzie dane wydarzenie się odbędzie
-    const eventCoords = eventsPlace.filter(event => event.title === title)[0]['coords'] 
-    const [coordsX, coordsY] = eventCoords
-    
-    const {x, y} = imageMapPosition
-    
-    return [coordsX, x , coordsY, y]
-}
-
+// Otrzymujemy dane wydarzenia, czyli koordynaty i nazwę tego wydarzenia, otrzymując obiekt i ten obiekt wstawiamy do zmiennej eventsDetails.
 $areas.forEach(area => {  
-    eventsPlace.push(
+    eventsDetails.push(
         {
             title: area.title,
             coords: area.coords.split(",").map(val => +val).slice(0,2)
@@ -73,6 +74,7 @@ $areas.forEach(area => {
     )  
 })
 
+// Funkcja do przesuwania mapy
 function moveMap(coords, imageMapPosition, mapSize){
     $imageMap.css('left', `calc(50% + ${Math.floor(imageMapPosition.width/2-coords*(imageMapPosition.width/mapSize[0]))}px)`)
 }

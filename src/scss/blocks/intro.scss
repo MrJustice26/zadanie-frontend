@@ -1,21 +1,32 @@
 @import "./breakpoints.scss";
 
 .intro {
-  max-width: 1453px;
+  &__container {
+    max-width: 1453px;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-  &__lists {
-    max-width: 350px;
+  &__cta {
+    margin-top: 200px;
   }
 
   &__title {
     transition: transform 0.4s, opacity 0.4s;
     opacity: 1;
+    width: fit-content;
 
     &.hide {
       transform: translateY(-10px);
       opacity: 0;
       cursor: default;
     }
+  }
+
+  &__lists {
+    max-width: 500px;
+    min-width: 200px;
+    width: 100%;
   }
 
   &__list {
@@ -26,9 +37,9 @@
 }
 
 .list__item {
+  font-size: 20px;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s;
   width: fit-content;
   transition: color 0.4s;
 }
@@ -37,8 +48,8 @@
   &__container {
     padding: 3.125rem;
     border: 2px solid #fff;
-    max-width: 500px;
-    min-width: 300px;
+    max-width: 700px;
+    min-width: 250px;
     width: 100%;
   }
   &__title {
@@ -52,94 +63,58 @@
   }
 }
 
-.pointer {
-  opacity: 0;
-  position: fixed;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: #fff;
-  transition: opacity 0.5s;
+@media screen and (min-width: 0) {
+  .intro {
+    &__title {
+      font-size: 2.5rem;
+    }
+    &__cta {
+      margin-top: 1.5rem;
+    }
 
-  &.active {
-    opacity: 1;
+    &__lists {
+      justify-content: center;
+    }
+  }
+  .list__item {
+    &.hide {
+      color: rgba(112, 5, 7, 0);
+    }
   }
 }
 
-.line {
-  position: absolute;
-  height: 2px;
-  width: 0rem;
-  right: 1.4rem;
-  top: 0.3125rem;
-  background-color: #fff;
-  transition: width 0.4s;
-  .pointer.active & {
-    width: 10rem;
-  }
-  &__top-text {
-    position: absolute;
-    top: -1.9rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-  }
-
-  &__bottom-text {
-    position: absolute;
-    font-size: 1rem;
-    top: 0.4rem;
-  }
-  &__top-text,
-  &__bottom-text {
-    opacity: 0;
-    transition: opacity 0.1s;
-  }
-  .pointer.active &__top-text {
-    opacity: 1;
-  }
-  .pointer.active &__bottom-text {
-    opacity: 1;
-  }
-}
-
-@media screen and (max-width: $sm - 1px) {
+@media screen and (min-width: $sm - 200px) {
   .intro__title {
     font-size: 3rem;
   }
 }
 
-@media screen and (min-width: $sm) {
+@media screen and (min-width: $sm - 100px) {
   .intro__title {
-    font-size: 3.5rem;
+    font-size: 4rem;
+  }
+  .intro__cta {
+    margin-top: 2rem;
+  }
+  .intro__lists {
+    justify-content: space-between;
   }
 }
 
 @media screen and (min-width: $md) {
-  .intro__title {
-    font-size: 4rem;
-  }
-}
+  .intro {
+    &__title {
+      font-size: 5.625rem;
+    }
 
-@media screen and (min-width: $lg) {
-  .intro__title {
-    font-size: 4.5rem;
+    &__cta {
+      margin-top: 200px;
+    }
   }
-}
 
-@media screen and (min-width: $xl) {
-  .intro__title {
-    font-size: 5rem;
-  }
-}
-
-@media screen and (min-width: $xxl) {
-  .intro__title {
-    font-size: 5.5rem;
-  }
-}
-
-@media screen and (min-width: $xxl) {
-  .intro__title {
-    font-size: 5.5rem;
+  .list__item {
+    &.hide {
+      color: rgba(112, 5, 7, 1);
+    }
   }
 }
