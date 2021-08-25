@@ -1,6 +1,5 @@
 .nav {
   &__container {
-    display: flex;
     align-items: center;
     max-width: 1453px;
   }
@@ -8,9 +7,11 @@
     margin-bottom: 0;
     max-width: 330px;
     width: 100%;
-
-    justify-content: space-between;
     list-style: none;
+
+    &:not(.nav__container > .nav__item) {
+      justify-content: space-between;
+    }
   }
   &__link {
     text-transform: uppercase;

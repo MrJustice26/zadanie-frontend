@@ -1,5 +1,6 @@
-@import "./vars.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./vars.scss";
+@import "./breakpoints.scss";
 @import "./font.scss";
 @import "./blocks/nav.scss";
 @import "./blocks/intro.scss";

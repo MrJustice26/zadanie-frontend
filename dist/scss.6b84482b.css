@@ -11131,7 +11131,6 @@ textarea.form-control-lg {
   font-weight: 600;
 }
 .nav__container {
-  display: flex;
   align-items: center;
   max-width: 1453px;
 }
@@ -11139,8 +11138,10 @@ textarea.form-control-lg {
   margin-bottom: 0;
   max-width: 330px;
   width: 100%;
-  justify-content: space-between;
   list-style: none;
+}
+.nav__item:not(.nav__container > .nav__item) {
+  justify-content: space-between;
 }
 .nav__link {
   text-transform: uppercase;
@@ -11265,6 +11266,9 @@ textarea.form-control-lg {
 .intro {
   max-width: 1453px;
 }
+.intro__lists {
+  max-width: 350px;
+}
 .intro__title {
   transition: transform 0.4s, opacity 0.4s;
   opacity: 1;
@@ -11291,7 +11295,8 @@ textarea.form-control-lg {
 .work-type__container {
   padding: 3.125rem;
   border: 2px solid #fff;
-  max-width: 700px;
+  max-width: 500px;
+  min-width: 300px;
   width: 100%;
 }
 .work-type__title {
@@ -11351,6 +11356,41 @@ textarea.form-control-lg {
   opacity: 1;
 }
 
+@media screen and (max-width: 575px) {
+  .intro__title {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 576px) {
+  .intro__title {
+    font-size: 3.5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .intro__title {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .intro__title {
+    font-size: 4.5rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .intro__title {
+    font-size: 5rem;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .intro__title {
+    font-size: 5.5rem;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .intro__title {
+    font-size: 5.5rem;
+  }
+}
 :root {
   --bs-body-font-family: "Gotham", sans-serif;
   --bs-body-color: #fff;

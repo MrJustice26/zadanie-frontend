@@ -146,13 +146,13 @@ var eventsPlace = [];
 
 function createPointer() {
   // Tworzymy nasz element
-  var $pointer = document.createElement("div"); // Nadajemy dla div elementa klasę pointer
+  var $pointer = $("\n    <div class=\"pointer\">\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    </div>"); // Nadajemy dla div elementa klasę pointer
+  // $pointer.addClass("pointer")
+  // Wstawiamy w div kontent HTML
 
-  $pointer.classList.add("pointer"); // Wstawiamy w div kontent HTML
-
-  $pointer.insertAdjacentHTML("afterbegin", "\n        <div class=\"line\">\n            <span class=\"line__top-text\">\n            </span>\n            <span class=\"line__bottom-text\">\n            </span>\n        </div>\n    "); // Wstawiamy nasz div "pointer" do dokumentu DOM
-
-  document.body.appendChild($pointer); // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
+  $("body").append($pointer); // Wstawiamy nasz div "pointer" do dokumentu DOM
+  // document.body.appendChild($pointer)
+  // // Dodajemy 2 eventListenery przy skrolowaniu, bądź przy zmniejszeniu/zwiększeniu ekranu punkt zostaje w tym samym miejscu i nigdzie nie zjeżdża
   // window.addEventListener("scroll", () => {
   //     activeTitle && drawPointer($pointer, activeTitle)
   // })
@@ -166,7 +166,7 @@ function createPointer() {
 function drawPointer(el, title) {
   var defaultMapSizes = [1556, 787];
 
-  var imageMapPosition = _main.$imageMap.getBoundingClientRect();
+  var imageMapPosition = _main.$imageMap[0].getBoundingClientRect();
 
   var _generateCoords = generateCoords(title, imageMapPosition),
       _generateCoords2 = _slicedToArray(_generateCoords, 4),
@@ -176,16 +176,15 @@ function drawPointer(el, title) {
       imageMapPositionY = _generateCoords2[3];
 
   var pointerX = coordsX + imageMapPositionX;
-  console.log(coordsY);
   var pointerY = coordsY + imageMapPositionY;
   moveMap(coordsX, imageMapPosition, defaultMapSizes);
-  el.style.left = "50%";
+  el.css("left", "50%");
   var lineWidth = 240;
   var distanceBetweenCircleAndLine = 22.4;
-  el.querySelector(".line").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem";
-  el.querySelector(".line__top-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
-  el.querySelector(".line__bottom-text").style.cssText = pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;";
-  el.style.top = Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px";
+  $(".line").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "left: 1.4rem" : "right: 1.4rem");
+  $(".line__top-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
+  $(".line__bottom-text").css("cssText", pointerX - distanceBetweenCircleAndLine - lineWidth + 59 < 0 ? "right: 0;" : "left: 0;");
+  el.css("top", Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px");
 }
 
 function generateCoords(title, imageMapPosition) {
@@ -213,23 +212,9 @@ $areas.forEach(function (area) {
 });
 
 function moveMap(coords, imageMapPosition, mapSize) {
-  console.log(imageMapPosition, coords, mapSize);
-  _main.$imageMap.style.left = "calc(50% + ".concat(Math.floor(imageMapPosition.width / 2 - coords * (imageMapPosition.width / mapSize[0])), "px)");
+  _main.$imageMap.css('left', "calc(50% + ".concat(Math.floor(imageMapPosition.width / 2 - coords * (imageMapPosition.width / mapSize[0])), "px)"));
 }
-},{"./main":"js/main.js"}],"js/utils.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.toColor = toColor;
-
-function toColor(arr, color) {
-  arr.forEach(function (item) {
-    item.style.color = color;
-  });
-}
-},{}],"js/main.js":[function(require,module,exports) {
+},{"./main":"js/main.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -239,72 +224,74 @@ exports.$imageMap = void 0;
 
 var _pointer = require("./pointer");
 
-var _utils = require("./utils");
-
-var $listItems = document.querySelectorAll(".list__item");
-var $introTitle = document.querySelector(".intro__title");
-var $dropdown = document.querySelector(".dropdown");
-var $imageMap = document.querySelector(".user-map");
+var $listItems = $(".list__item");
+var $introTitle = $(".intro__title");
+var $dropdown = $(".dropdown");
+var $imageMap = $(".user-map");
 exports.$imageMap = $imageMap;
 var activeTitle; // Dodajemy eventListener na przycisk dropdown'a, gdy użytkownik klika na container, w którym są nadpis PL i strzałka w dół to nasz dropdown się otwiera.
 
-$dropdown.querySelector(".dropdown__btn").addEventListener("click", function (e) {
-  $dropdown.classList.toggle("active");
+$(".dropdown__btn").on("click", function (e) {
+  $dropdown.toggleClass("active");
 });
-document.addEventListener('click', function (e) {
-  // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
+$(document).on('click', function (e) {
+  var $target = $(e.target); // Jeżeli użytkownik kliknąl na element z listy i jeżeli aktywny element z listy jest identyczny bądź jest ten samy,
   // to nic się nie dzieje
-  if (activeTitle === e.target.textContent) {
+
+  if (activeTitle === $target.text()) {
     return;
   } // Gdy użytkownik kliknął na element z listy i on jest aktywny i później klika na następny element (nie identycznego do poprzedniego)
   // To usuwamy poprzednią kropkę z informacją o wydarzeniu, na który użytkownik kliknął wcześniej
 
 
-  var $pointer = document.querySelectorAll(".pointer");
-  $pointer === null || $pointer === void 0 ? void 0 : $pointer.forEach(function (el) {
-    el.classList.remove("active");
-    setTimeout(function () {
-      el.remove();
-    }, 300);
-  }); // Resetujemy aktywny tytuł
+  var $pointer = $(".pointer");
+  $pointer.removeClass("active");
+  $pointer.remove(); // console.log($pointer)
+  // $pointer?.forEach(el => {
+  //     el.classList.remove("active")
+  //     setTimeout(() => {
+  //         el.remove()
+  //     }, 300)
+  // })
+  // Resetujemy aktywny tytuł
 
   activeTitle = ''; // Sprawdzamy, czy użytkownik kliknął na element z listy
 
-  if (e.target.classList.contains("list__item")) {
+  if ($target.hasClass("list__item")) {
     // Tworzymy punkt do pokazania na naszej mapie
     var _$pointer = (0, _pointer.createPointer)(); // Nadajemy dla activeTitle aktualny tytuł wydarzenia (np. "Paris Air Show")
 
 
-    activeTitle = e.target.textContent; // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce
+    activeTitle = $target.text(); // Nadajemy pozycje dla naszego punkta i również w tej funkcji przesuwamy mapę według osi X w odpowiednie miejsce
 
-    (0, _pointer.drawPointer)(_$pointer, e.target.textContent); // Nadajemy tekst dla naszego tekstu, który znajduje się nad linią i pod linią ( ta linia jest przyczepiona do punktu )
+    (0, _pointer.drawPointer)(_$pointer, $target.text()); // Nadajemy tekst dla naszego tekstu, który znajduje się nad linią i pod linią ( ta linia jest przyczepiona do punktu )
 
-    _$pointer.querySelector(".line__top-text").textContent = e.target.textContent;
-    _$pointer.querySelector(".line__bottom-text").textContent = e.target.dataset.subtitle; // W ten moment chowamy tytuł "World ahead", nadając mu klasę w DOM "hide" 
+    $(".line__top-text").text($target.text());
+    $(".line__bottom-text").text($target.data("subtitle")); // W ten moment chowamy tytuł "World ahead", nadając mu klasę w DOM "hide" 
 
-    $introTitle.classList.add("hide"); // Utylita, zmieniająca kolor wszystkich elementów z listy na odpowiedni, który podaliśmy jako drugi argument.
+    $introTitle.addClass("hide"); // Zmieniamy kolor wszystkich elementów z listy.
 
-    (0, _utils.toColor)($listItems, window.innerWidth > 600 ? "rgba(112, 5, 7, 1)" : "rgba(112, 5, 7, 0)"); // Nadajemy kolor biały dla aktywnego elementu z listy, czyli element, na który użytkownik kliknął
+    $listItems.css('color', "".concat(window.innerWidth > 600 ? "rgba(112, 5, 7, 1)" : "rgba(112, 5, 7, 0)")); // Nadajemy kolor biały dla aktywnego elementu z listy, czyli element, na który użytkownik kliknął
 
-    window.innerWidth > 600 && (e.target.style.color = "white"); // Pokazujemy nasz punkt na mapie
+    window.innerWidth > 600 && $target.css("color", "#fff"); // Pokazujemy nasz punkt na mapie
 
-    _$pointer.classList.add("active");
+    _$pointer.addClass("active");
   } else {
     // Gdy użytkownik wcześniej kliknął na element z listy i póżniej kliknął gdzieś indziej, to mapa wraca na standardową pozycję,  
     // a elementy z listy wracają w standardowy stan (w stan przed kliknięciem)
-    $imageMap.style.left = "50%";
-    $introTitle.classList.remove("hide");
-    (0, _utils.toColor)($listItems, "#fff");
+    $imageMap.css("left", "50%");
+    $introTitle.removeClass("hide");
+    $listItems.css('color', "#fff");
   }
 });
-var $mobileNav = document.querySelector(".nav-mobile__background");
-document.querySelector(".nav__btn").addEventListener("click", function () {
-  $mobileNav.classList.add("active");
+var $mobileNav = $(".nav-mobile__background");
+$(".nav__btn").on("click", function () {
+  $mobileNav.addClass("active");
 });
-document.querySelector(".nav-mobile__btn").addEventListener("click", function () {
-  $mobileNav.classList.remove("active");
+$(".nav-mobile__btn").on("click", function () {
+  $mobileNav.removeClass("active");
 });
-},{"./pointer":"js/pointer.js","./utils":"js/utils.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./pointer":"js/pointer.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -332,7 +319,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "11278" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "24329" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
