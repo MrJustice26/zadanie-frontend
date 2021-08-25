@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "build": "parcel ./src/build index.html"
+    "build": "parcel build ./src/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/MrJustice26/zadanie-frontend#readme",
   "devDependencies": {
+    "cssnano": "^5.0.8",
+    "postcss": "^8.3.6",
     "sass": "^1.38.0"
   },
   "dependencies": {
