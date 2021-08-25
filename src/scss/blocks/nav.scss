@@ -1,3 +1,4 @@
+@import "../breakpoints.scss";
 @import "./mobile-nav.scss";
 @import "./dropdown.scss";
 
@@ -42,13 +43,13 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: $md) {
   .nav__btn {
     display: none;
   }
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: $sm) {
   .nav {
     &__logo {
       left: 3rem;
