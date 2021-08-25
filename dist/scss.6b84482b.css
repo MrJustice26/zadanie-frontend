@@ -11251,6 +11251,9 @@ textarea.form-control-lg {
   display: block;
 }
 
+.nav {
+  margin-top: 3.93rem;
+}
 .nav__container {
   position: relative;
   align-items: center;
@@ -11339,6 +11342,7 @@ textarea.form-control-lg {
 
 .list__item {
   font-size: 20px;
+  line-height: 2.25rem;
   font-weight: 500;
   cursor: pointer;
   width: fit-content;

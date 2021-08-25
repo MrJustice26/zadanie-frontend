@@ -180,7 +180,8 @@ function showPointer(el, title) {
     moveMap(coordsX, imageMapPosition, defaultMapSizes);
     el.css("left", "50%");
     el.css("top", Math.floor(pointerY * (imageMapPosition['height'] / defaultMapSizes[1])) + "px");
-  }
+  } // Jest przyznaczone dla wyświetlenia linii, ktora jest przyczepiona do punktu z lewej, czy z prawej strony. Działa w ekstra wypadkach, gdy punkty będą znajdować się na końcu mapy
+
 
   var lineWidth = 240;
   var distanceBetweenCircleAndLine = 22.4;

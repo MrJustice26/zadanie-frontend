@@ -54,6 +54,8 @@ export function showPointer(el, title){
     }
     
     
+    // Jest przyznaczone dla wyświetlenia linii, ktora jest przyczepiona do punktu z lewej, czy z prawej strony. Działa w ekstra wypadkach, gdy punkty będą znajdować się na końcu mapy
+
     const lineWidth = 240;
     const distanceBetweenCircleAndLine = 22.4
     
