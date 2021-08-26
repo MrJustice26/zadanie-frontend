@@ -1,5 +1,3 @@
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
-
 @import "./font.scss";
 
 @import "./map.scss";
@@ -9,12 +7,11 @@
 @import "./blocks/intro.scss";
 @import "./pointer.scss";
 
-:root {
-  --bs-body-font-family: "Gotham", sans-serif;
-  --bs-body-color: #fff;
-  --bs-body-bg: #9d090f;
+* {
+  font-family: "Gotham", sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+body {
+  color: #fff !important;
+  background-color: #9d090f !important;
 }
