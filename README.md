@@ -1,3 +1,4 @@
 # zadanie-frontend
 
-Użyj polecenia `npm run dev` by włączyć serwer ze stroną.
+Użyjcie polecenia `npm i` dla pobierania potrzebnych biblotek `npm run dev` by
+włączyć serwer ze stroną.
