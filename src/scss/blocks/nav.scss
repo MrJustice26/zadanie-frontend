@@ -1,5 +1,4 @@
 @import "../breakpoints.scss";
-@import "./mobile-nav.scss";
 @import "./dropdown.scss";
 
 .nav {
@@ -30,6 +29,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     transition: color 0.4s;
+    line-height: 1.42rem;
 
     &:hover:not(&.dropdown) {
       color: #000 !important;

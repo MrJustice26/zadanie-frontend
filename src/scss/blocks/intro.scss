@@ -12,6 +12,7 @@
   }
 
   &__title {
+    line-height: 2.25rem;
     transition: transform 0.4s, opacity 0.4s;
     opacity: 1;
     width: fit-content;
@@ -24,7 +25,6 @@
   }
 
   &__lists {
-    max-width: 500px;
     min-width: 200px;
     width: 100%;
   }
@@ -39,7 +39,6 @@
 
 .list__item {
   font-size: 20px;
-  line-height: 2.25rem;
   font-weight: 500;
   cursor: pointer;
   width: fit-content;
@@ -55,17 +54,20 @@
   }
   &__title {
     font-size: 1.25rem;
-    margin-bottom: 2.125rem;
+    line-height: 2.25rem;
   }
   &__text {
     font-size: 1rem;
     max-width: 604px;
     width: 100%;
+    line-height: 1.875rem;
+    margin-bottom: 0;
   }
 }
 
 @media screen and (min-width: 0) {
   .intro {
+    margin-top: 0rem;
     &__title {
       font-size: 2.5rem;
     }
@@ -75,9 +77,11 @@
 
     &__lists {
       justify-content: center;
+      max-width: 100%;
     }
   }
   .list__item {
+    line-height: 3rem;
     &.hide {
       color: rgba(112, 5, 7, 0);
     }
@@ -85,25 +89,30 @@
 }
 
 @media screen and (min-width: $sm - 200px) {
-  .intro__title {
-    font-size: 3rem;
+  .intro {
+    &__title {
+      font-size: 3rem;
+    }
   }
 }
 
 @media screen and (min-width: $sm - 100px) {
-  .intro__title {
-    font-size: 4rem;
-  }
-  .intro__cta {
-    margin-top: 2rem;
-  }
-  .intro__lists {
-    justify-content: space-between;
+  .intro {
+    &__title {
+      font-size: 4rem;
+    }
+    &__cta {
+      margin-top: 2rem;
+    }
+    &__lists {
+      justify-content: space-between;
+    }
   }
 }
 
 @media screen and (min-width: $md) {
   .intro {
+    margin-top: 10rem;
     &__title {
       font-size: 5.625rem;
     }
@@ -111,9 +120,14 @@
     &__cta {
       margin-top: 200px;
     }
+
+    &__lists {
+      max-width: 500px;
+    }
   }
 
   .list__item {
+    line-height: 2.25rem;
     &.hide {
       color: rgba(112, 5, 7, 1);
     }

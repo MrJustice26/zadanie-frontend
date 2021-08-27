@@ -460,7 +460,6 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "$imageMap", ()=>$imageMap
 );
 var _pointer = require("./pointer");
-var _mobileNav = require("./mobile-nav");
 // Otrzymujemy elementy z DOM
 const $listItems = $(".list__item");
 const $introTitle = $(".intro__title");
@@ -527,7 +526,7 @@ $(document).on('click', (e)=>{
     }
 });
 
-},{"./pointer":"doltY","./mobile-nav":"lnBU7","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"doltY":[function(require,module,exports) {
+},{"./pointer":"doltY","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"doltY":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "createPointer", ()=>createPointer
@@ -622,20 +621,6 @@ exports.export = function(dest, destName, get) {
         get: get
     });
 };
-
-},{}],"lnBU7":[function(require,module,exports) {
-// mobileNav jest przeznaczony dla nawigacji, która jest dostępna, gdy szerokość ekranu jest mniejsza, niż 768px
-// Otrzymujemy element z DOM
-const $mobileNav = $(".nav-mobile__background");
-// Przy kliknięciu otwiera się nawigacja 
-// Element .nav__btn pokazuje się na ekranie, gdy szerokość jest mniejsza, niż 768px
-$(".nav__btn").on("click", ()=>{
-    $mobileNav.addClass("active");
-});
-// W tym przypadku nawigacja zamyka się
-$(".nav-mobile__btn").on("click", ()=>{
-    $mobileNav.removeClass("active");
-});
 
 },{}]},["lDN0V","38Jk0"], "38Jk0", "parcelRequire54fc")
 

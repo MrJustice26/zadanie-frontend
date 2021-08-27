@@ -1,5 +1,4 @@
 import { createPointer, showPointer } from "./pointer";
-import './mobile-nav';
 
 // Otrzymujemy elementy z DOM
 const $listItems = $(".list__item")
