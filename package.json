@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/MrJustice26/zadanie-frontend#readme",
   "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-rc.0",
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
     "cssnano": "^5.0.8",
+    "parcel": "^2.0.0-rc.0",
     "postcss": "^8.3.6",
     "sass": "^1.38.0"
   },
