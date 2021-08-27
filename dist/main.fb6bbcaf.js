@@ -260,7 +260,9 @@ $(document).on('click', function (e) {
 
   var $pointer = $(".pointer");
   $pointer.removeClass("active");
-  $pointer.remove(); // Resetujemy aktywny tytuł
+  setTimeout(function () {
+    $pointer.remove();
+  }, 300); // Resetujemy aktywny tytuł
 
   activeTitle = ''; // Sprawdzamy, czy użytkownik kliknął na element z listy i czy ten element nie posiada klasy hide
   // Jeżeli szerokość ekranu jest większa 768px to użytkownik może kliknąć na inny element z listy
@@ -327,7 +329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "10628" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1042" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

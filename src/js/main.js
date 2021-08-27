@@ -47,8 +47,11 @@ $(document).on('click', (e) => {
     // Gdy użytkownik kliknął na element z listy i on jest aktywny i później klika na następny element (nie identycznego do poprzedniego)
     // To usuwamy poprzednią kropkę z informacją o wydarzeniu, na który użytkownik kliknął wcześniej
     const $pointer = $(".pointer")
-    $pointer.removeClass("active")
-    $pointer.remove()
+    $pointer.removeClass("active") 
+    setTimeout(() => {
+        $pointer.remove()
+    }, 300);
+    
 
     
 
